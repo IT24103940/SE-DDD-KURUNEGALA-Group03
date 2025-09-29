@@ -1,0 +1,42 @@
+package com.group3.demo.finance.entity;
+
+import jakarta.persistence.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "Payments")
+public class Payment {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(optional=false)
+    @JoinColumn(name = "invoiceId")
+    private Invoice invoice;
+
+    private BigDecimal amount;
+    private String method; // e.g. Credit Card, Bank Transfer
+    private String type = "PAYMENT"; // PAYMENT or REFUND
+    private Integer installmentNumber;
+    private LocalDateTime paidAt = LocalDateTime.now();
+
+    public Payment(){}
+    public Payment(Invoice invoice, BigDecimal amount, String method, String type, Integer installmentNumber) {
+        this.invoice = invoice; this.amount = amount; this.method = method; this.type = type; this.installmentNumber = installmentNumber;
+    }
+    // getters/setters ...
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public Invoice getInvoice() { return invoice; }
+    public void setInvoice(Invoice invoice) { this.invoice = invoice; }
+    public BigDecimal getAmount() { return amount; }
+    public void setAmount(BigDecimal amount) { this.amount = amount; }
+    public String getMethod() { return method; }
+    public void setMethod(String method) { this.method = method; }
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
+    public Integer getInstallmentNumber() { return installmentNumber; }
+    public void setInstallmentNumber(Integer installmentNumber) { this.installmentNumber = installmentNumber; }
+    public LocalDateTime getPaidAt() { return paidAt; }
+    public void setPaidAt(LocalDateTime paidAt) { this.paidAt = paidAt; }
+}
