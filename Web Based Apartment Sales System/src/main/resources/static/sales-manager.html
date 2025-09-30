@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Sales Manager | Apartment Sales</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="/css/sales.css"/>
+</head>
+<body>
+<header class="topbar">
+    <h1>Sales Manager Panel</h1>
+    <nav>
+        <a href="#leads">Leads</a>
+        <a href="#interactions">Interactions</a>
+        <a href="#sales">Sales</a>
+        <a href="#reports">Reports</a>
+    </nav>
+</header>
+
+<main class="container">
+    <!-- Lead Capture -->
+    <section id="leads" class="card">
+        <h2>Create / View Leads</h2>
+        <form id="leadForm" class="grid">
+            <div><label>First Name<input required name="firstName"/></label></div>
+            <div><label>Last Name<input required name="lastName"/></label></div>
+            <div><label>Email<input required type="email" name="email"/></label></div>
+            <div><label>Phone<input name="phone"/></label></div>
+            <div><label>Source<input name="source" placeholder="Facebook / Walk-in"/></label></div>
+            <div><label>Assigned To<input name="assignedTo" placeholder="sales.isuru"/></label></div>
+            <div><label>Apartment Code<input name="apartmentCode" placeholder="APT-A1-1203"/></label></div>
+            <div><label>Budget (LKR)<input type="number" step="0.01" name="budget"/></label></div>
+            <div><button type="submit">Create Lead</button></div>
+        </form>
+
+        <div class="filters">
+            <label>Status
+                <select id="leadStatusFilter">
+                    <option value="">All</option>
+                    <option>NEW</option><option>CONTACTED</option><option>QUALIFIED</option><option>LOST</option><option>CONVERTED</option>
+                </select>
+            </label>
+            <button id="refreshLeads">Refresh</button>
+        </div>
+
+        <table id="leadTable">
+            <thead><tr>
+                <th>ID</th><th>Customer</th><th>Email</th><th>Phone</th><th>Source</th>
+                <th>Status</th><th>Assigned To</th><th>Apt</th><th>Actions</th>
+            </tr></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+    <!-- Interactions -->
+    <section id="interactions" class="card">
+        <h2>Customer Interactions</h2>
+        <form id="interactionForm" class="grid">
+            <div><label>Lead ID<input required type="number" name="leadId"/></label></div>
+            <div>
+                <label>Channel
+                    <select name="channel">
+                        <option>CALL</option><option>EMAIL</option><option>VISIT</option><option>MESSAGE</option>
+                    </select>
+                </label>
+            </div>
+            <div class="grid-col-span-2"><label>Notes<textarea name="notes" rows="3" required></textarea></label></div>
+            <div><button type="submit">Add Interaction</button></div>
+        </form>
+
+        <div class="inline">
+            <label>Show interactions for Lead ID <input id="intLeadId" type="number"/></label>
+            <button id="loadInteractions">Load</button>
+        </div>
+        <table id="interactionTable">
+            <thead><tr><th>ID</th><th>Lead</th><th>Channel</th><th>Notes</th><th>Date</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+    <!-- Sales -->
+    <section id="sales" class="card">
+        <h2>Sales Tracking</h2>
+        <form id="saleForm" class="grid">
+            <div><label>Lead ID<input required type="number" name="leadId"/></label></div>
+            <div><label>Apartment Code<input name="apartmentCode"/></label></div>
+            <div><label>Price (LKR)<input type="number" step="0.01" name="price"/></label></div>
+            <div>
+                <label>Status
+                    <select name="status">
+                        <option>PENDING</option><option>COMPLETED</option><option>CANCELLED</option>
+                    </select>
+                </label>
+            </div>
+            <div>
+                <label>Payment
+                    <select name="paymentStatus">
+                        <option>UNPAID</option><option>PARTIAL</option><option>PAID</option>
+                    </select>
+                </label>
+            </div>
+            <div><label>Contract Date<input type="date" name="contractDate"/></label></div>
+            <div><button type="submit">Create Sale</button></div>
+        </form>
+
+        <button id="refreshSales" class="mt8">Refresh All Sales</button>
+        <table id="saleTable" class="mt8">
+            <thead><tr><th>ID</th><th>Lead</th><th>Apt</th><th>Price</th><th>Status</th><th>Payment</th><th>Date</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+    <!-- Reports -->
+    <section id="reports" class="card">
+        <h2>Reports</h2>
+        <div class="inline">
+            <label>Year <input id="reportYear" type="number" min="2000" max="2100" value="2025"/></label>
+            <button id="loadReport">Load Summary</button>
+        </div>
+        <pre id="reportBox" class="mt8"></pre>
+    </section>
+</main>
+
+<script src="/js/sales.js"></script>
+</body>
+</html>
