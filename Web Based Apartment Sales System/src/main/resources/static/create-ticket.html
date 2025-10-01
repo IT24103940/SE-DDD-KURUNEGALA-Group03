@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Ticket</title>
+    <link rel="stylesheet" th:href="@{/css/support.css}" />
+</head>
+<body>
+<h1>Create Ticket</h1>
+<form th:action="@{/support/create}" th:object="${ticket}" method="post">
+    <input type="hidden" th:field="*{customerId}" value="1" /> <!-- Use session in prod -->
+    <label>Title: <input th:field="*{title}" /></label>
+    <label>Description: <textarea th:field="*{description}"></textarea></label>
+    <button type="submit">Submit</button>
+</form>
+<script th:src="@{/js/support.js}"></script>
+</body>
+</html>
