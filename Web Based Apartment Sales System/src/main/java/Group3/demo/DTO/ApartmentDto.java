@@ -1,20 +1,20 @@
 package Group3.demo.DTO;
 
-import Group3.demo.Entity.ApartmentStatus;
+import Group3.demo.Entity.enums.ApartmentStatus;
+import jakarta.validation.constraints.*;
+import lombok.Data;
 
-import java.util.List;
+import java.math.BigDecimal;
 
-public class ApartmentDto {
-    private String title;
-    private String location;
-    private Integer sizeSqft;
-    private Double price;
+@Data
+public class ApartmentDTO {
+    @NotBlank private String code;
+    @NotBlank private String title;
     private String description;
-    private ApartmentStatus status;
-    private List<String> imagePaths;  // For frontend transfer
-
-    // Constructors, Getters, Setters (similar to Entity, omitted for brevity)
-    public ApartmentDto() {}
-
-    // ... (add all getters/setters like in Apartment)
+    private String city;
+    @NotNull @DecimalMin("0.0") private BigDecimal price;
+    @NotNull private ApartmentStatus status;
+    private Integer bedrooms;
+    private Integer bathrooms;
+    private Integer areaSqFt;
 }
