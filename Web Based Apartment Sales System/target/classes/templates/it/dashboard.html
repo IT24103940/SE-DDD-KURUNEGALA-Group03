@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>IT Technician Dashboard</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <style>
+    .actions { margin-top: 16px; }
+    .actions form { display: inline; }
+    .card { border: 1px solid #ddd; padding: 16px; margin: 16px 0; border-radius: 8px; }
+    nav { margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+<h1>IT Technician Dashboard</h1>
+
+<div class="card">
+  <h3>User Management</h3>
+  <p>Create, edit, reset passwords, and manage roles for all users.</p>
+  <a th:href="@{/it/users}"><button type="button">👥 Go to IT Users</button></a>
+</div>
+
+<nav class="actions">
+  <form th:action="@{/logout}" method="post">
+    <button type="submit">🔒 Logout</button>
+  </form>
+</nav>
+
+</body>
+</html>
+
