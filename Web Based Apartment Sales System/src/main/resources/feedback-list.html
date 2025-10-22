@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Manage Feedback</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+      nav.actions { margin-bottom: 16px; }
+      nav.actions form { display: inline; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <nav class="actions">
+      <a th:href="@{/support}"><button type="button">⬅ Back to Dashboard</button></a>
+      <form th:action="@{/logout}" method="post" style="display:inline">
+        <button type="submit">🔒 Logout</button>
+      </form>
+    </nav>
+
+    <h2>Customer Feedback Management</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Customer</th>
+            <th>Message</th>
+            <th>Rating</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Actions</th>
+        </tr>
+        <tr th:each="fb : ${feedbackList}">
+            <td th:text="${fb.id}"></td>
+            <td th:text="${fb.customer.fullName}"></td>
+            <td th:text="${fb.message}"></td>
+            <td th:text="${fb.rating}"></td>
+            <td th:text="${fb.status}"></td>
+            <td th:text="${#temporals.format(fb.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+            <td>
+                <form th:action="@{'/support/feedback/' + ${fb.id} + '/approve'}" method="post" style="display:inline">
+                    <button type="submit" th:if="${fb.status.name() == 'PENDING'}" class="btn btn--approve">Approve</button>
+                </form>
+                <form th:action="@{'/support/feedback/' + ${fb.id} + '/reject'}" method="post" style="display:inline">
+                    <button type="submit" th:if="${fb.status.name() == 'PENDING'}" class="btn btn--delete">Reject</button>
+                </form>
+                <form th:action="@{'/support/feedback/' + ${fb.id} + '/delete'}" method="post" style="display:inline">
+                    <button type="submit" class="btn btn--delete">Delete</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+    <a th:href="@{/support}">Back to Dashboard</a>
+</div>
+</body>
+</html>
