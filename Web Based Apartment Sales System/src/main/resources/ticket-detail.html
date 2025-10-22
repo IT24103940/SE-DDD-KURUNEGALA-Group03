@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Ticket Detail</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <style>
+    nav.actions { margin-bottom: 16px; }
+    nav.actions form { display: inline; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <nav class="actions">
+    <a th:href="@{/support}"><button type="button">⬅ Back to Dashboard</button></a>
+    <form th:action="@{/logout}" method="post" style="display:inline">
+      <button type="submit">🔒 Logout</button>
+    </form>
+  </nav>
+
+  <h2>
+    Ticket #<span th:text="${ticket.id}"></span> -
+    <span th:text="${ticket.subject}"></span>
+  </h2>
+
+  <p>Status: <span th:text="${ticket.status}"></span></p>
+
+  <!-- Status Update Form -->
+  <form th:action="@{'/support/tickets/' + ${ticket.id} + '/status'}" method="post">
+    <select name="status">
+      <option th:each="s : ${statuses}"
+              th:text="${s}"
+              th:value="${s}"
+              th:selected="${s == ticket.status}">
+      </option>
+    </select>
+    <button type="submit">Update</button>
+  </form>
+
+  <!-- Replies -->
+  <h3>Replies</h3>
+  <div th:if="${#lists.isEmpty(replies)}">
+    <p><em>No replies yet.</em></p>
+  </div>
+  <div th:each="r : ${replies}">
+    <p>
+      <strong th:text="${r.author != null ? r.author.username : 'System'}"></strong>:
+      <span th:text="${r.message}"></span>
+      <span style="color:gray;font-size:smaller;" th:text="${#temporals.format(r.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+    </p>
+  </div>
+
+  <!-- Reply Form -->
+  <form th:action="@{'/support/tickets/' + ${ticket.id} + '/reply'}" method="post">
+    <input name="message" placeholder="Reply..." required/>
+    <button type="submit">Send</button>
+  </form>
+
+  <a th:href="@{/support/tickets}">
+    <button type="submit">Back</button>
+  </a>
+</div>
+</body>
+</html>
