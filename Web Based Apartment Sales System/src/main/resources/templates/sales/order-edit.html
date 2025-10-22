@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>🛠️ Edit Sales Order – Luxury Edition</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
+
+        body {
+            background: radial-gradient(circle at top right, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* ---------- HERO NAV ---------- */
+        .hero-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.05);
+            padding: 20px 40px;
+            border-radius: 16px;
+            margin: 40px auto 20px;
+            width: 85%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .hero-nav h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(90deg,#ffb347,#ffcc33);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(255,204,51,0.3);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hero-buttons button {
+            border: none;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-dashboard {
+            background: linear-gradient(135deg,#7c5cff,#a58bff);
+            box-shadow: 0 0 15px rgba(124,92,255,0.3);
+        }
+        .btn-dashboard:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(160,128,255,0.6);
+        }
+
+        .btn-logout {
+            background: linear-gradient(135deg,#ff3d3d,#ff6b4a);
+            box-shadow: 0 0 15px rgba(255,61,61,0.4);
+        }
+        .btn-logout:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255,61,61,0.8);
+        }
+
+        /* ---------- CONTAINER ---------- */
+        .container {
+            width: 85%;
+            max-width: 1000px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 25px;
+            padding: 60px;
+            margin: 60px auto;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: #ffcc00;
+            margin-bottom: 40px;
+            text-shadow: 0 0 15px rgba(255,204,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 750px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #ffcc00;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            appearance: none;
+        }
+
+        input:focus, select:focus {
+            border-color: #a58bff;
+            box-shadow: 0 0 15px rgba(160,128,255,0.5);
+        }
+
+        select option {
+            background: #1b242d;
+            color: #fff;
+        }
+
+        /* ---------- BUTTONS ---------- */
+        .btn {
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            font-weight: 600;
+            padding: 14px 32px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .btn--update {
+            background: linear-gradient(135deg,#7c5cff,#a58bff);
+            box-shadow: 0 0 15px rgba(124,92,255,0.3);
+        }
+        .btn--update:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(160,128,255,0.6);
+        }
+
+        .btn--cancel {
+            background: linear-gradient(135deg,#ff8a00,#ffb347);
+            color: #222;
+            font-weight: 700;
+        }
+        .btn--cancel:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255,179,71,0.7);
+        }
+
+        .form-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HERO NAV -->
+<div class="hero-nav">
+    <h1>🛠️ Edit Sales Order</h1>
+    <div class="hero-buttons">
+        <a th:href="@{/sales}">
+            <button class="btn-dashboard">⬅️ Back to Dashboard</button>
+        </a>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn-logout">🔒 Logout</button>
+        </form>
+    </div>
+</div>
+
+<!-- FORM CONTAINER -->
+<div class="container">
+    <h2>✨ Edit Sales Order</h2>
+
+    <form th:action="@{'/sales/orders/' + ${order.id} + '/update'}" method="post">
+
+        <label>🧾 Lead:</label>
+        <select name="leadId" required>
+            <option th:each="l : ${leads}" th:value="${l.id}" th:text="${l.id}" th:selected="${l.id == order.lead.id}"></option>
+        </select>
+
+        <label>🏘️ Apartment:</label>
+        <select name="apartmentId" id="apartmentId" required>
+            <option th:each="a : ${apartments}" th:value="${a.id}" th:text="${a.title + ' (' + a.code + ') - ' + a.city}" th:selected="${a.id == order.apartment.id}"></option>
+        </select>
+        <input type="hidden" name="apartmentId" id="hiddenApartmentId" />
+
+        <label>👤 Customer:</label>
+        <select name="customerId" id="customerId" required>
+            <option th:each="c : ${customers}" th:value="${c.id}" th:text="${c.username}" th:selected="${c.id == order.customer.id}"></option>
+        </select>
+        <input type="hidden" name="customerId" id="hiddenCustomerId" />
+
+        <label>💰 Total Amount:</label>
+        <input type="number" name="totalAmount" step="0.01" th:value="${order.totalAmount}" required />
+
+        <label>💳 Payment Plan:</label>
+        <select name="paymentPlan">
+            <option th:each="pp : ${paymentPlans}" th:value="${pp}" th:text="${pp}" th:selected="${pp == order.paymentPlan}"></option>
+        </select>
+
+        <label>📊 Status:</label>
+        <select name="status" required>
+            <option th:each="st : ${statuses}" th:value="${st}" th:text="${st}" th:selected="${st == order.status}"></option>
+        </select>
+
+        <div class="form-buttons">
+            <button type="submit" class="btn btn--update">💾 Update</button>
+            <a th:href="@{/sales/orders}">
+                <button type="button" class="btn btn--cancel">❌ Cancel</button>
+            </a>
+        </div>
+    </form>
+</div>
+
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  const leadData = /*[[${leadData}]]*/ [];
+  function applyLeadSelection() {
+    const leadSelect = document.querySelector('select[name="leadId"]');
+    const aptSelect = document.getElementById('apartmentId');
+    const custSelect = document.getElementById('customerId');
+    const hiddenApt = document.getElementById('hiddenApartmentId');
+    const hiddenCust = document.getElementById('hiddenCustomerId');
+    const leadId = parseInt(leadSelect.value, 10);
+    const meta = leadData.find(l => l.id === leadId);
+    if (meta && meta.apartmentId && meta.customerId) {
+      if (aptSelect) { aptSelect.value = String(meta.apartmentId); aptSelect.disabled = true; }
+      if (custSelect) { custSelect.value = String(meta.customerId); custSelect.disabled = true; }
+      if (hiddenApt) hiddenApt.value = meta.apartmentId;
+      if (hiddenCust) hiddenCust.value = meta.customerId;
+    } else {
+      if (aptSelect) { aptSelect.disabled = false; }
+      if (custSelect) { custSelect.disabled = false; }
+      if (hiddenApt) hiddenApt.value = '';
+      if (hiddenCust) hiddenCust.value = '';
+    }
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    applyLeadSelection();
+    document.querySelector('select[name="leadId"]').addEventListener('change', applyLeadSelection);
+  });
+  /*]]>*/
+</script>
+</body>
+</html>

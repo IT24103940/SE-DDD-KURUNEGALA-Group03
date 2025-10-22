@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm Apartment Purchase</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        /* ===== Background ===== */
+        body {
+            background: radial-gradient(circle at top right, #0b141b, #203a43, #0e1a21);
+            font-family: "Poppins", sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: gradientShift 12s ease infinite alternate;
+        }
+
+
+        /* ===== Container ===== */
+        .container {
+            width: 85%;
+            max-width: 650px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(15px);
+            text-align: center;
+        }
+
+        h2 {
+            color: #ffcc00;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.9rem;
+            font-weight: 700;
+            text-shadow: 0 0 12px rgba(255, 204, 0, 0.6);
+        }
+
+        p {
+            font-size: 1rem;
+            margin: 10px 0;
+        }
+
+        strong {
+            color: #ffcc00;
+        }
+
+        .strikethrough {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        .price-now {
+            color: #00ff80;
+            font-weight: 600;
+        }
+
+        /* ===== Form ===== */
+        form {
+            background: rgba(255, 255, 255, 0.04);
+            padding: 25px;
+            border-radius: 16px;
+            margin-top: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        label {
+            font-weight: 600;
+            color: #ffcc00;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            outline: none;
+            background: rgba(0, 0, 0, 0.4);
+            color: #fff;
+            font-size: 1rem;
+            appearance: none;
+            box-shadow: 0 0 12px rgba(164, 132, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        select:hover {
+            box-shadow: 0 0 18px rgba(164, 132, 255, 0.8);
+            background: rgba(0, 0, 0, 0.55);
+        }
+
+        select option {
+            background-color: #0b132b;
+            color: #fff;
+            padding: 10px;
+        }
+
+        /* ===== Button ===== */
+        button {
+            margin-top: 20px;
+            width: 100%;
+            background: linear-gradient(135deg, #7c5cff, #a58bff);
+            color: #fff;
+            border: none;
+            border-radius: 40px;
+            padding: 14px 20px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(124, 92, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(160, 128, 255, 0.9);
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #a58bff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            color: #c4b5ff;
+            text-shadow: 0 0 10px rgba(164, 132, 255, 0.6);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>🏠 Buy Apartment</h2>
+
+    <div>
+        <p><strong>🏢 Apartment:</strong> <span th:text="${apartment.title}"></span></p>
+        <p th:if="${promotion == null}"><strong>💰 Price:</strong> $<span th:text="${apartment.price}"></span></p>
+
+        <div th:if="${promotion != null}">
+            <p><strong>🎁 Promotion:</strong> <span th:text="${promotion.title}"></span></p>
+            <p>
+                <strong>💸 Price:</strong>
+                <span class="strikethrough">$<span th:text="${apartment.price}"></span></span>
+                &nbsp;→&nbsp;
+                <span class="price-now">$<span th:text="${discountedPrice}"></span></span>
+            </p>
+        </div>
+    </div>
+
+    <form th:action="@{/customer/buy}" method="post">
+        <input type="hidden" name="apartmentId" th:value="${apartment.id}" />
+        <input type="hidden" name="promotionId" th:if="${promotion != null}" th:value="${promotion.id}" />
+
+        <div class="field">
+            <label for="paymentPlan">💳 Choose Payment Plan:</label>
+            <select id="paymentPlan" name="paymentPlan" required>
+                <option value="FULL">💵 Full Payment</option>
+                <option value="HALF">💰 Half Payment (50% Deposit)</option>
+            </select>
+        </div>
+
+        <button type="submit">🛒 Confirm Purchase Request</button>
+    </form>
+
+    <a th:href="@{/home}">❌ Cancel</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promotion Details</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        /* ===== BACKGROUND ===== */
+        body {
+            background: radial-gradient(circle at top right, #0b141b, #203a43, #0e1a21);
+            font-family: "Poppins", sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            animation: gradientShift 12s ease infinite alternate;
+        }
+
+
+        /* ===== CONTAINER ===== */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(15px);
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #ffcc00;
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            text-shadow: 0 0 12px rgba(255, 204, 0, 0.6);
+            margin-bottom: 30px;
+        }
+
+        .card {
+            display: flex;
+            gap: 25px;
+            align-items: flex-start;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
+            margin-bottom: 40px;
+        }
+
+        .card img {
+            width: 320px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .info h2 {
+            color: #ffcc00;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .info p {
+            margin: 8px 0;
+            font-size: 1rem;
+            color: #ddd;
+        }
+
+        .info strong {
+            color: #ffcc00;
+        }
+
+        /* ===== GRID CARDS ===== */
+        h2.section-title {
+            color: #ffcc00;
+            font-size: 1.6rem;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.6);
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
+            margin-top: 20px;
+        }
+
+        .apartment-card {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 18px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+            transition: all 0.35s ease;
+            text-align: center;
+        }
+
+        .apartment-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 25px rgba(164, 132, 255, 0.45);
+        }
+
+        .apartment-card img {
+            width: 100%;
+            height: 160px;
+            border-radius: 12px;
+            object-fit: cover;
+            margin-bottom: 12px;
+        }
+
+        .apartment-card h3 {
+            color: #ffcc00;
+            margin-bottom: 6px;
+            font-size: 1.2rem;
+        }
+
+        .apartment-card p {
+            margin: 6px 0;
+            color: #aaa;
+        }
+
+        .strikethrough { text-decoration: line-through; color: #888; }
+        .price-now { color: #00ff80; font-weight: 600; }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-block;
+            padding: 10px 18px;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #7c5cff, #a58bff);
+            color: #fff;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(124, 92, 255, 0.4);
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(160, 128, 255, 0.9);
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.08);
+            color: #a58bff;
+            padding: 10px 18px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 30px;
+            transition: 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(164, 132, 255, 0.15);
+            color: #fff;
+            box-shadow: 0 0 12px rgba(164, 132, 255, 0.6);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h1>🎉 Promotion Details</h1>
+</header>
+
+<div class="container">
+    <div class="card">
+        <img th:if="${promotion.bannerImageUrl != null}" th:src="@{${promotion.bannerImageUrl}}" alt="Promotion">
+        <div class="info">
+            <h2>🏷️ <span th:text="${promotion.title}"></span></h2>
+            <p><strong>📝 Description:</strong> <span th:text="${promotion.description}"></span></p>
+            <p><strong>📅 Start Date:</strong> <span th:text="${promotion.startDate}"></span></p>
+            <p><strong>📆 End Date:</strong> <span th:text="${promotion.endDate}"></span></p>
+            <p><strong>⚙️ Status:</strong> <span th:text="${promotion.status}"></span></p>
+            <p th:if="${promotion.discountType != null}">
+                <strong>💸 Discount:</strong>
+                <span th:if="${promotion.discountType.name() == 'PERCENT'}" th:text="${promotion.discountValue} + '%'">%</span>
+                <span th:if="${promotion.discountType.name() == 'FIXED'}" th:text="'$' + ${promotion.discountValue}"></span>
+            </p>
+        </div>
+    </div>
+
+    <h2 class="section-title">🏠 Discounted Apartments</h2>
+
+    <div th:if="${#lists.isEmpty(apartments)}">
+        <i>No available apartments match this promotion right now.</i>
+    </div>
+
+    <div class="grid" th:unless="${#lists.isEmpty(apartments)}">
+        <div class="apartment-card" th:each="apt : ${apartments}">
+            <img th:if="${apt.imageUrl != null}" th:src="@{${apt.imageUrl}}" alt="Apartment">
+            <h3 th:text="${apt.title}"></h3>
+            <p th:text="${apt.city}"></p>
+            <p>
+                <span class="strikethrough">$<span th:text="${apt.price}"></span></span>
+                &nbsp;→&nbsp;
+                <span class="price-now">$<span th:text="${discountedPrices[apt.id]}"></span></span>
+            </p>
+            <a class="btn" th:href="@{'/customer/buy/' + ${apt.id} + '?promotionId=' + ${promotion.id}}">🛒 Buy Promotion</a>
+        </div>
+    </div>
+
+    <footer>
+        <a class="btn-secondary" th:href="@{/home}">🏡 Back to Home</a>
+    </footer>
+</div>
+</body>
+</html>

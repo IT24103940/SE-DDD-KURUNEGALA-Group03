@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>📋 Leads – Luxury Edition</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at top right, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* ---------- HERO NAV ---------- */
+        .hero-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px 40px;
+            border-radius: 16px;
+            margin: 40px auto;
+            width: 85%;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .hero-nav h1 {
+            font-size: 1.9rem;
+            background: linear-gradient(90deg, #ffb347, #ffcc33);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(255, 204, 51, 0.3);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hero-buttons button {
+            border: none;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(124, 92, 255, 0.3);
+        }
+
+        .hero-buttons .btn-dashboard {
+            background: linear-gradient(135deg, #7c5cff, #a58bff);
+        }
+
+        .hero-buttons .btn-dashboard:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(160, 128, 255, 0.6);
+        }
+
+        /* 🔴 Logout Button */
+        .hero-buttons .btn-logout {
+            background: linear-gradient(135deg, #ff3d3d, #ff6b4a);
+            box-shadow: 0 0 15px rgba(255, 61, 61, 0.4);
+        }
+
+        .hero-buttons .btn-logout:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 61, 61, 0.8);
+        }
+
+        /* ---------- CONTAINER ---------- */
+        .container {
+            width: 85%;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 0 auto 60px;
+            box-shadow: 0 8px 35px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(14px);
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #ffcc00;
+            margin-bottom: 25px;
+            text-shadow: 0 0 12px rgba(255, 204, 0, 0.4);
+        }
+
+        /* ---------- BUTTONS ---------- */
+        .btn {
+            border: none;
+            border-radius: 25px;
+            color: #fff;
+            font-weight: 600;
+            padding: 8px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 4px;
+        }
+
+        /* 🟣 New Lead button (Purple Glow) */
+        .btn--new {
+            background: linear-gradient(135deg, #7c5cff, #a58bff);
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            border-radius: 30px;
+            box-shadow: 0 0 15px rgba(124, 92, 255, 0.3);
+            padding: 12px 26px;
+            margin-bottom: 18px;
+        }
+
+        .btn--new:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(160, 128, 255, 0.6);
+        }
+
+        /* 🟡 Create Order */
+        .btn--create {
+            background: linear-gradient(135deg, #ffcc00, #ffd54f);
+            color: #222;
+            font-weight: 700;
+            box-shadow: 0 0 10px rgba(255, 204, 0, 0.4);
+        }
+
+        .btn--create:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.8);
+        }
+
+        /* 🟢 Edit */
+        .btn--edit {
+            background: linear-gradient(135deg, #00c853, #00e676);
+            box-shadow: 0 0 10px rgba(0, 230, 118, 0.4);
+        }
+
+        .btn--edit:hover {
+            box-shadow: 0 0 20px rgba(0, 230, 118, 0.8);
+            transform: scale(1.05);
+        }
+
+        /* 🔴 Delete */
+        .btn--delete {
+            background: linear-gradient(135deg, #ff3d3d, #ff6b4a);
+            box-shadow: 0 0 10px rgba(255, 61, 61, 0.4);
+        }
+
+        .btn--delete:hover {
+            box-shadow: 0 0 20px rgba(255, 61, 61, 0.8);
+            transform: scale(1.05);
+        }
+
+        /* ---------- TABLE ---------- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffcc00;
+            font-weight: 600;
+            padding: 12px;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            color: #ddd;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        a {
+            color: #9dbdff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hero Section -->
+<div class="hero-nav">
+    <h1>📋 Leads Management</h1>
+    <div class="hero-buttons">
+        <a th:href="@{/sales}">
+            <button class="btn-dashboard">⬅️ Back to Dashboard</button>
+        </a>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn-logout">🔒 Logout</button>
+        </form>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="container">
+    <h2>✨ Leads</h2>
+
+    <a th:href="@{/sales/leads/new}">
+        <button type="submit" class="btn btn--new">➕ New Lead</button>
+    </a>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Customer</th>
+            <th>Apartment</th>
+            <th>Status</th>
+            <th>Assigned</th>
+            <th>Actions</th>
+        </tr>
+
+        <tr th:each="l : ${leads}">
+            <td><a th:href="@{'/sales/orders/new?leadId=' + ${l.id}}" th:text="${l.id}"></a></td>
+            <td th:text="${l.customer.fullName}"></td>
+            <td th:text="${l.apartment.code}"></td>
+            <td th:text="${l.status}"></td>
+            <td th:text="${l.assignedTo != null ? l.assignedTo.username : 'N/A'}"></td>
+            <td>
+                <a th:href="@{'/sales/orders/new?leadId=' + ${l.id}}">
+                    <button type="button" class="btn btn--create">📦 Create Order</button>
+                </a>
+                <a th:href="@{'/sales/leads/' + ${l.id} + '/edit'}">
+                    <button type="button" class="btn btn--edit">✏️ Edit</button>
+                </a>
+                <a th:href="@{'/sales/leads/' + ${l.id} + '/delete'}"
+                   onclick="return confirm('Are you sure you want to delete this lead?');">
+                    <button type="button" class="btn btn--delete">🗑️ Delete</button>
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

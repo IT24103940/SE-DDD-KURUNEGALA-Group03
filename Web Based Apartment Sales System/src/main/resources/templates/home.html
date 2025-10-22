@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Apartment Sales | Home</title>
+    <link rel="stylesheet" href="/css/homestyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div th:if="${successMessage}" class="alert alert-success">
+    <p th:text="${successMessage}"></p>
+</div>
+<div th:if="${error}" class="alert alert-danger">
+    <p th:text="${error}"></p>
+</div>
+<header>
+    <h1>Welcome to Apartment Sales</h1>
+    <nav>
+        <a th:href="@{/home}">Home</a>
+
+        <!-- Removed search/filter from nav; moved to Apartments section toolbar -->
+        <span th:if="${#authorization.expression('isAuthenticated()')}">
+            Hello, <b th:text="${#authentication.name}"></b> |
+            <a th:href="@{/logout}">Logout</a> |
+            <a th:href="@{/customer/tickets}">Support</a> |
+            <a th:href="@{/customer/orders}">My Orders</a> |
+            <a th:href="@{/customer/my-feedback}">Manage Feedbacks</a>
+        </span>
+        <span th:unless="${#authorization.expression('isAuthenticated()')}">
+            <a th:href="@{/customer/register}">Register</a>
+            <a th:href="@{/customer/auth}">Login</a>
+        </span>
+    </nav>
+</header>
+    <!-- ======= LUXURY IMAGE SLIDER ======= -->
+<!-- ======= LUXURY INFINITE SLIDER ======= -->
+<section class="hero-slider">
+    <div class="slider-wrapper">
+        <div class="slider-track">
+            <div class="slide"><img src="css/images/apartment1.jpg" alt="Luxury Apartment 1"></div>
+            <div class="slide"><img src="css/images/apartment2.jpg" alt="Luxury Apartment 2"></div>
+            <div class="slide"><img src="css/images/apartment3.jpg" alt="Luxury Apartment 3"></div>
+            <div class="slide"><img src="css/images/apartment4.jpg" alt="Luxury Apartment 4"></div>
+            <!-- Duplicate for seamless infinite effect -->
+            <div class="slide"><img src="css/images/apartment1.jpg" alt="Luxury Apartment 1"></div>
+            <div class="slide"><img src="css/images/apartment2.jpg" alt="Luxury Apartment 2"></div>
+            <div class="slide"><img src="css/images/apartment3.jpg" alt="Luxury Apartment 3"></div>
+            <div class="slide"><img src="css/images/apartment4.jpg" alt="Luxury Apartment 4"></div>
+        </div>
+    </div>
+
+    <!-- Caption Overlay -->
+    <div class="hero-caption">
+        <h1>Secure Your Dream Luxury Home Today</h1>
+        <p>
+            Step into a world of elegance where every apartment is designed to inspire.
+            From breathtaking ocean views that greet you each morning, to the sparkling
+            infinity pool and world-class facilities at your doorstep, this is more than
+            a home — it’s a lifestyle.
+        </p>
+        <p>
+            Nestled in a prime location with seamless access to shopping, dining, and
+            entertainment, our residences combine modern architecture with timeless
+            sophistication. Each unit is crafted to deliver comfort, exclusivity, and
+            prestige like no other.
+        </p>
+        <a href="#apartments" class="hero-btn">Reserve Your Unit Now & Begin Your New Chapter</a>
+    </div>
+</section>
+<main>
+    <!-- Apartments Toolbar -->
+    <div class="listing-toolbar">
+
+        <!-- LEFT BOX: Filter + Search -->
+        <div class="toolbar-box">
+            <div class="left-inner">
+                <button type="button" id="filterToggle" class="icon-button" title="Filters">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 5h18l-7 8v5l-4 3v-8L3 5z"
+                              stroke="#000" stroke-width="1.8" fill="none"/>
+                    </svg>
+                </button>
+
+                <form th:action="@{/home}" method="get" class="search-form">
+                    <input type="text" name="q" placeholder="Search apartments..." th:value="${q} ?: ''" />
+                    <button type="submit">Search</button>
+                </form>
+
+                <!-- Floating Filter Panel -->
+                <div id="filterPanel" class="filter-popup">
+                    <form th:action="@{/home}" method="get" class="filter-grid">
+                        <div><label>City</label><input type="text" name="city" placeholder="e.g., Colombo" /></div>
+                        <div><label>Min Price</label><input type="number" name="minPrice" placeholder="0.00" /></div>
+                        <div><label>Max Price</label><input type="number" name="maxPrice" placeholder="500000.00" /></div>
+                        <div><label>Bedrooms</label><input type="number" name="minBedrooms" placeholder="e.g., 2" /></div>
+                        <div><label>Bathrooms</label><input type="number" name="minBathrooms" placeholder="e.g., 1" /></div>
+                        <div><label>Promotion</label>
+                            <select name="promo">
+                                <option value="all">All</option>
+                                <option value="with">With Promotion</option>
+                                <option value="without">Without Promotion</option>
+                            </select>
+                        </div>
+                        <div class="filter-apply">
+                            <button type="submit" class="apply-btn">Apply</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT BOX: Results + Sort -->
+        <div class="toolbar-box">
+            <div class="right-inner">
+                <span th:text="${resultsCount} + ' results'">5 results</span>
+                <div class="sort-form">
+                    <label for="sortSelect">Sort:</label>
+                    <select id="sortSelect" name="sort" th:value="${sort}" onchange="this.form?.submit?.()">
+                        <option value="newest">Newest</option>
+                        <option value="oldest">Oldest</option>
+                        <option value="price_asc">Price: Low → High</option>
+                        <option value="price_desc">Price: High → Low</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Filter toggle popup
+        const filterBtn = document.getElementById('filterToggle');
+        const popup = document.getElementById('filterPanel');
+        document.addEventListener('click', e => {
+            if (filterBtn.contains(e.target)) popup.classList.toggle('visible');
+            else if (!popup.contains(e.target)) popup.classList.remove('visible');
+        });
+    </script>
+
+
+    <!-- Section header (now below toolbar) -->
+    <section>
+        <h2 id="apartments">Available Apartments</h2>
+
+        <!-- Grid -->
+        <div class="grid">
+            <div class="card" th:each="apt : ${apartments}">
+                <h3 th:text="${apt.title}"></h3>
+                <img th:if="${apt.imageUrl != null}" th:src="@{${apt.imageUrl}}" alt="Apartment"/>
+
+                <p class="apt-info">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span th:text="${apt.city}"></span>
+                </p>
+
+                <div class="apt-specs">
+                    <div class="spec-item"><i class="fa-solid fa-bed"></i><span th:text="${apt.bedrooms} + ' bd'"></span></div>
+                    <div class="spec-item"><i class="fa-solid fa-bath"></i><span th:text="${apt.bathrooms} + ' ba'"></span></div>
+                    <div class="spec-item"><i class="fa-solid fa-ruler-combined"></i><span th:text="${apt.areaSqFt} + ' sqft'"></span></div>
+                    <div class="spec-item"><i class="fa-solid fa-tag"></i><span>$<span th:text="${apt.price}"></span></span></div>
+                </div>
+
+                <a class="btn" th:href="@{'/customer/buy/' + ${apt.id}}">Buy Now</a>
+            </div>
+
+        </div>
+    </section>
+    <section class="apartment-details">
+        <div class="details-grid">
+            <div class="detail-box">
+                <i class="fa-solid fa-bed"></i>
+                <span>BED</span>
+            </div>
+            <div class="detail-box">
+                <i class="fa-solid fa-stairs"></i>
+                <span>FLOOR</span>
+            </div>
+            <div class="detail-box">
+                <i class="fa-regular fa-square"></i>
+                <span>AREA</span>
+            </div>
+            <div class="detail-box">
+                <i class="fa-solid fa-drafting-compass"></i>
+                <span>FLOOR PLAN</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promotions Section -->
+    <section id="promotions" class="section dark">
+        <h2>Active Promotions</h2>
+        <div class="grid">
+            <div class="card" th:each="promo : ${promotions}">
+                <h3 th:text="${promo.title}"></h3>
+                <img th:if="${promo.bannerImageUrl != null}" th:src="@{${promo.bannerImageUrl}}" alt="Promotion"/>
+                <p th:text="${promo.description}"></p>
+                <p>Budget: $<span th:text="${promo.budget}"></span></p>
+                <!-- Changed label and href to point to /promotion/{id} -->
+                <a class="btn-secondary" th:href="@{'/promotion/' + ${promo.id}}">Promotion</a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Reviews Section -->
+    <section class="section">
+        <h2>Our Growth Stories</h2>
+        <div class="grid">
+            <div class="card" th:each="fb : ${feedbackList}">
+                <span th:each="star : ${#numbers.sequence(1, fb.rating)}">⭐️</span><br>
+                <strong th:text="${fb.message}"></strong><br>
+                <span style="color:gray;font-size:smaller;">by <span th:text="${fb.customer.fullName}"></span> on <span th:text="${#temporals.format(fb.createdAt, 'yyyy-MM-dd')}"></span></span>
+            </div>
+            <div th:if="${#lists.isEmpty(feedbackList)}">
+                <i>No customer feedback yet. Be the first to share your experience!</i>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===============================
+     FEEDBACK + SUPPORT SECTIONS
+     (Perfectly Centered and Compact)
+================================= -->
+    <div class="support-feedback-wrapper">
+
+        <!-- FEEDBACK BOX -->
+        <section id="feedbackBox" class="feedback-box">
+            <h2>Share Your Experience</h2>
+            <form th:action="@{/customer/feedback}" th:object="${feedback}" method="post">
+                <label for="message">Your Feedback:</label>
+                <textarea id="message" th:field="*{message}" required maxlength="1000" rows="4" cols="50"></textarea>
+
+                <label>Rating:</label>
+                <div class="rating">
+                    <input type="radio" id="star5" name="rating" value="5" required/>
+                    <label for="star5">★</label>
+                    <input type="radio" id="star4" name="rating" value="4"/>
+                    <label for="star4">★</label>
+                    <input type="radio" id="star3" name="rating" value="3"/>
+                    <label for="star3">★</label>
+                    <input type="radio" id="star2" name="rating" value="2"/>
+                    <label for="star2">★</label>
+                    <input type="radio" id="star1" name="rating" value="1"/>
+                    <label for="star1">★</label>
+                </div>
+
+                <button type="submit">Submit Feedback</button>
+            </form>
+        </section>
+    <!-- End Feedback Form -->
+
+    <!-- Create Ticket Form -->
+        <!-- SUPPORT TICKET BOX -->
+        <section id="supportTicket" class="support-ticket">
+            <h2>Support Ticket</h2>
+            <form th:action="@{/customer/support/submit}" method="post">
+                <input type="text" name="subject" placeholder="Subject" required>
+                <textarea name="description" placeholder="Description" required></textarea>
+                <select name="priority" required>
+                    <option value="LOW">LOW</option>
+                    <option value="MEDIUM">MEDIUM</option>
+                    <option value="HIGH">HIGH</option>
+                </select>
+                <button type="submit">Create Ticket</button>
+            </form>
+        </section>
+    </div>
+</main>
+<section class="contact-info">
+    <h2>CONTACT INFO</h2>
+    <div class="info-list">
+        <div><i class="fa-solid fa-location-dot"></i> NO 1087, PANNIPITIYA ROAD, BATTARAMULLA, SRI LANKA.</div>
+        <div><i class="fa-solid fa-building"></i> HOME LANDS (MELBOURNE) PTY LTD, UNIT 3 / 184 WHITEHORSE RD, BLACKBURN VIC 3130, AUSTRALIA</div>
+        <div><i class="fa-solid fa-phone"></i> +94 711 999 222</div>
+        <div><i class="fa-brands fa-whatsapp"></i> +94 710 299 444</div>
+        <div><i class="fa-solid fa-envelope"></i> info@homelandsskyline.lk</div>
+    </div>
+
+    <div class="social-icons">
+        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="#"><i class="fa-solid fa-link"></i></a>
+    </div>
+</section>
+<footer>
+    <p>© 2025 Apartment Sales. All rights reserved.</p>
+</footer>
+
+<!-- Insert small script to toggle the filter panel -->
+<script>
+// Minimal JS to toggle the advanced filter panel and close on outside click
+(function(){
+  var toggle = document.getElementById('filterToggle');
+  var panel = document.getElementById('filterPanel');
+  if (!toggle || !panel) return;
+  var group = toggle.closest('.search-group');
+  function hide(){ panel.style.display = 'none'; toggle && toggle.setAttribute('aria-expanded','false'); }
+  function show(){ panel.style.display = 'block'; toggle && toggle.setAttribute('aria-expanded','true'); }
+  toggle.addEventListener('click', function(e){ e.preventDefault();
+    if (panel.style.display === 'block') { hide(); } else { show(); }
+  });
+  document.addEventListener('click', function(e){
+    if (group && !group.contains(e.target)) { hide(); }
+  });
+})();
+</script>
+<script>
+    document.addEventListener("scroll", () => {
+        document.querySelectorAll('.section, .card').forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight - 100) el.classList.add('visible');
+        });
+    });
+</script>
+<script>
+    // Hide/show filter panel
+    const toggle = document.getElementById('filterToggle');
+    const panel = document.getElementById('filterPanel');
+    toggle.addEventListener('click', () => {
+        panel.classList.toggle('visible');
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const track = document.querySelector(".slider-track");
+        const slides = document.querySelectorAll(".slide");
+        const nextBtn = document.querySelector(".next");
+        const prevBtn = document.querySelector(".prev");
+        let index = 0;
+
+        function showSlide(i) {
+            track.style.transform = `translateX(-${i * 100}%)`;
+        }
+
+        function nextSlide() {
+            index = (index + 1) % slides.length;
+            showSlide(index);
+        }
+
+        function prevSlide() {
+            index = (index - 1 + slides.length) % slides.length;
+            showSlide(index);
+        }
+
+        nextBtn.addEventListener("click", nextSlide);
+        prevBtn.addEventListener("click", prevSlide);
+
+        // Auto-slide every 5 seconds
+        setInterval(nextSlide, 5000);
+    });
+</script>
+<script>
+    document.querySelector('.hero-btn').addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelector('#apartments').scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    });
+    // Prevent dropdown menus from being closed instantly
+    document.querySelectorAll('.support-ticket select').forEach(sel => {
+        sel.addEventListener('click', e => {
+            e.stopPropagation(); // stops bubbling so filter-panel listener won't trigger
+        });
+    });
+    // --- Prevent Support Ticket dropdown from instantly closing ---
+    document.querySelectorAll('.support-ticket select').forEach(sel => {
+        sel.addEventListener('mousedown', e => {
+            e.stopPropagation(); // stop global click listeners from firing
+        });
+        sel.addEventListener('click', e => {
+            e.stopPropagation(); // extra safety for Firefox
+        });
+    });
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Submit Support Issue</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+    <h2>Submit an Issue</h2>
+</header>
+
+<main>
+    <form th:action="@{/support/submit}" th:object="${ticket}" method="post" style="max-width:500px;margin:auto;">
+
+        <!-- Subject -->
+        <div>
+            <label for="subject">Subject:</label><br>
+            <input type="text" id="subject" th:field="*{subject}" required class="form-control"/>
+        </div>
+        <br>
+
+        <!-- Description -->
+        <div>
+            <label for="description">Description:</label><br>
+            <textarea id="description" th:field="*{description}" rows="5" class="form-control" required></textarea>
+        </div>
+        <br>
+
+        <!-- Priority -->
+        <div>
+            <label for="priority">Priority:</label><br>
+            <select id="priority" th:field="*{priority}" class="form-control" required>
+                <option th:each="p : ${T(Group3.demo.Entity.enums.TicketPriority).values()}"
+                        th:value="${p}" th:text="${p}"></option>
+            </select>
+        </div>
+        <br>
+
+        <!-- Submit -->
+        <button type="submit" class="btn">Submit Issue</button>
+    </form>
+</main>
+
+</body>
+</html>

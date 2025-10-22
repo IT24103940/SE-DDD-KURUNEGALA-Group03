@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm Promotion Purchase</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        /* ===== BACKGROUND ===== */
+        body {
+            background: radial-gradient(circle at top right, #0b141b, #203a43, #0e1a21);
+            font-family: "Poppins", sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: gradientShift 12s ease infinite alternate;
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            width: 85%;
+            max-width: 650px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(15px);
+            text-align: center;
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #ffcc00;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.9rem;
+            font-weight: 700;
+            text-shadow: 0 0 12px rgba(255, 204, 0, 0.6);
+        }
+
+        p {
+            font-size: 1rem;
+            margin: 10px 0;
+            color: #eee;
+        }
+
+        strong {
+            color: #ffcc00;
+        }
+
+        /* ===== FORM ===== */
+        form {
+            background: rgba(255, 255, 255, 0.04);
+            padding: 25px;
+            border-radius: 16px;
+            margin-top: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ===== BUTTONS ===== */
+        button {
+            width: 100%;
+            border: none;
+            border-radius: 40px;
+            padding: 14px 20px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            background: linear-gradient(135deg, #7c5cff, #a58bff);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(124, 92, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(160, 128, 255, 0.9);
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #a58bff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            color: #c4b5ff;
+            text-shadow: 0 0 10px rgba(164, 132, 255, 0.6);
+        }
+
+        /* ===== PROMOTION INFO ===== */
+        .promo-info {
+            text-align: left;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .promo-info p {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h2>🎉 Confirm Promotion Purchase</h2>
+
+    <div class="promo-info">
+        <p><strong>🏷️ Promotion:</strong> <span th:text="${promotion.title}"></span></p>
+        <p><strong>📝 Description:</strong> <span th:text="${promotion.description}"></span></p>
+        <p><strong>💰 Budget:</strong> $<span th:text="${promotion.budget}"></span></p>
+    </div>
+
+    <form th:action="@{/marketing/promotions/order}" method="post">
+        <input type="hidden" name="promotionId" th:value="${promotion.id}" />
+        <button type="submit">🛒 Confirm Purchase</button>
+    </form>
+
+    <a th:href="@{/customer/orders}">❌ Cancel</a>
+</div>
+</body>
+</html>

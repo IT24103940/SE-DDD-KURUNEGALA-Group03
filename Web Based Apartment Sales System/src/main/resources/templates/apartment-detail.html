@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Apartment Details</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<header class="header-stub">
+    <div class="logo">Apartment Sales</div>
+    <nav>
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/public/promotions}">Promotions</a>
+        <a th:href="@{/customer/dashboard}">Dashboard</a>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="card">
+        <div class="card-media">
+            <img th:src="@{/images/apartment-sample.jpg}" alt="Apartment" loading="lazy">
+        </div>
+        <div class="card-body">
+            <h2 th:text="${apartment.title}">Apartment title</h2>
+            <p class="small-muted"><strong>City:</strong> <span th:text="${apartment.city}"></span></p>
+            <p class="small-muted"><strong>Status:</strong> <span th:text="${apartment.status}"></span></p>
+            <p class="mt-2"><strong>Description:</strong> <span th:text="${apartment.description}"></span></p>
+
+            <div class="meta mt-3">
+                <div><i class="fa fa-bed"></i> <span th:text="${apartment.bedrooms}"></span> beds</div>
+                <div><i class="fa fa-bath"></i> <span th:text="${apartment.bathrooms}"></span> baths</div>
+                <div><i class="fa fa-ruler-combined"></i> <span th:text="${apartment.areaSqFt}"></span> sq.ft</div>
+            </div>
+
+            <div class="price-row">
+                <div class="price-tag">
+                    <div class="price">$<span th:text="${apartment.price}"></span></div>
+                </div>
+                <div>
+                    <a class="btn" th:href="@{/customer/dashboard}">Proceed to Book</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
