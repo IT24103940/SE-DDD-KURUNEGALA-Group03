@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tickets</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+      nav.actions { margin-bottom: 16px; }
+      nav.actions form { display: inline; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <nav class="actions">
+      <a th:href="@{/support}"><button type="button">⬅ Back to Dashboard</button></a>
+      <form th:action="@{/logout}" method="post" style="display:inline">
+        <button type="submit">🔒 Logout</button>
+      </form>
+    </nav>
+
+    <h2>All Tickets</h2>
+
+    <!-- Create Ticket Form --
+    <form th:action="@{/support/tickets}" method="post">
+        <input type="text" name="subject" placeholder="Subject" required>
+        <textarea name="description" placeholder="Description"></textarea>
+        <select name="priority" required>
+            <option value="LOW">LOW</option>
+            <option value="MEDIUM">MEDIUM</option>
+            <option value="HIGH">HIGH</option>
+        </select>
+        <select name="customerId" required>
+            <option th:each="c : ${customers}" th:value="${c.id}" th:text="${c.fullName}"></option>
+        </select>
+        <button type="submit">Create</button>
+    </form> -->
+
+    <!-- Ticket List -->
+    <!-- <h3>Tickets</h3> -->
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Subject</th>
+            <th>Status</th>
+            <th>Customer</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="t : ${tickets}">
+            <td th:text="${t.id}"></td>
+            <td><a th:href="@{'/support/tickets/' + ${t.id}}" th:text="${t.subject}"></a></td>
+            <td th:text="${t.status}"></td>
+            <td th:text="${t.customer.fullName}"></td>
+            <td>
+                <form th:action="@{'/support/tickets/' + ${t.id} + '/delete'}" method="post" style="display:inline">
+                    <button type="submit" class="btn btn--delete">Delete</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+    <a th:href="@{/support}">
+        <button type="submit">Back</button>
+    </a>
+</div>
+</body>
+</html>
