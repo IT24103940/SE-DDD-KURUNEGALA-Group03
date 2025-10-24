@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>🏢 Apartments – Admin Panel</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
+        body {
+            background: linear-gradient(145deg, #0b141b, #203a43, #0e1a21);
+            color: #fff;
+            min-height: 100vh;
+            padding: 0 6%;
+        }
+
+        /* ---------- HERO NAV ---------- */
+        .hero-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px 40px;
+            border-radius: 16px;
+            margin-top: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .hero-nav h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(90deg, #ffcc70, #ff8177);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(255, 204, 112, 0.3);
+        }
+
+        .hero-buttons button {
+            border: none;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        /* Back button (purple) */
+        .hero-buttons .back-btn {
+            background: linear-gradient(135deg, #7c5cff, #a58bff);
+            box-shadow: 0 0 15px rgba(124, 92, 255, 0.3);
+        }
+
+        .hero-buttons .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(160, 128, 255, 0.6);
+        }
+
+        /* 🔴 Logout button (system-wide red) */
+        .hero-buttons .logout-btn {
+            background: linear-gradient(135deg, #ff3d3d, #ff6b4a);
+            box-shadow: 0 0 15px rgba(255, 61, 61, 0.4);
+        }
+
+        .hero-buttons .logout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(255, 61, 61, 0.7);
+        }
+
+        /* ---------- TABLE SECTION ---------- */
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 18px;
+            padding: 40px;
+            margin-top: 40px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #ffcc00;
+            margin-bottom: 25px;
+            text-shadow: 0 0 12px rgba(255, 204, 0, 0.4);
+        }
+
+        .new-apartment {
+            display: inline-block;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #7c5cff, #a58bff);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(124, 92, 255, 0.3);
+            transition: all 0.3s;
+        }
+
+        .new-apartment:hover {
+            background: linear-gradient(135deg, #a58bff, #c8b4ff);
+            box-shadow: 0 0 25px rgba(170, 130, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            text-align: center;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffcc00;
+            font-weight: 600;
+            padding: 12px;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            color: #ddd;
+        }
+
+        tr:hover { background: rgba(255, 255, 255, 0.03); }
+
+        /* ---------- BUTTON STYLES ---------- */
+        .btn {
+            border: none;
+            border-radius: 25px;
+            color: #fff;
+            font-weight: 600;
+            padding: 8px 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 4px;
+        }
+
+        .btn--edit {
+            background: linear-gradient(90deg, #00c853, #00e676);
+            box-shadow: 0 0 10px rgba(0, 230, 118, 0.4);
+        }
+
+        .btn--edit:hover {
+            box-shadow: 0 0 20px rgba(0, 230, 118, 0.8);
+            transform: scale(1.05);
+        }
+
+        .btn--delete {
+            background: linear-gradient(90deg, #ff3d3d, #ff6b4a);
+            box-shadow: 0 0 10px rgba(255, 61, 61, 0.4);
+        }
+
+        .btn--delete:hover {
+            box-shadow: 0 0 20px rgba(255, 61, 61, 0.8);
+            transform: scale(1.05);
+        }
+
+        .btn--upload {
+            background: linear-gradient(90deg, #ffcc00, #ffd54f);
+            color: #222;
+            font-weight: 700;
+            box-shadow: 0 0 10px rgba(255, 204, 0, 0.4);
+        }
+
+        .btn--upload:hover {
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.8);
+            transform: scale(1.05);
+        }
+
+        input[type="file"] {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            color: #ccc;
+            padding: 6px;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+
+        input[type="file"]::-webkit-file-upload-button {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            border-radius: 10px;
+            padding: 6px 12px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="file"]::-webkit-file-upload-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hero Navigation -->
+<div class="hero-nav">
+    <h1>🏢 Apartment Management</h1>
+    <div class="hero-buttons">
+        <a th:href="@{/admin}">
+            <button class="back-btn">⬅️ Back to Dashboard</button>
+        </a>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="logout-btn">🔒 Logout</button>
+        </form>
+    </div>
+</div>
+
+<!-- Content Section -->
+<div class="container">
+    <h2>✨ Apartments</h2>
+
+    <!-- Flash messages -->
+    <div th:if="${success}" style="background:#153; color:#dff0d8; padding:12px; border-radius:8px; margin-bottom:16px;">
+        <p th:text="${success}"></p>
+    </div>
+    <div th:if="${error}" style="background:#631; color:#f8d7da; padding:12px; border-radius:8px; margin-bottom:16px;">
+        <p th:text="${error}"></p>
+    </div>
+
+    <a th:href="@{/admin/apartments/new}">
+        <button type="button" class="new-apartment">➕ New Apartment</button>
+    </a>
+
+    <table>
+        <tr>
+            <th>🏷 Code</th>
+            <th>🏠 Title</th>
+            <th>📍 City</th>
+            <th>💰 Price</th>
+            <th>📊 Status</th>
+            <th>⚙️ Actions</th>
+        </tr>
+
+        <tr th:each="a : ${apartments}">
+            <td th:text="${a.code}"></td>
+            <td th:text="${a.title}"></td>
+            <td th:text="${a.city}"></td>
+            <td th:text="${a.price}"></td>
+            <td th:text="${a.status}"></td>
+            <td>
+                <a th:href="@{'/admin/apartments/' + ${a.id} + '/edit'}">
+                    <button type="button" class="btn btn--edit">🖊 Edit</button>
+                </a>
+
+                <form th:action="@{'/admin/apartments/' + ${a.id} + '/delete'}"
+                      method="post" style="display:inline;">
+                    <button type="submit" class="btn btn--delete">🗑 Delete</button>
+                </form>
+
+                <form th:action="@{'/admin/apartment/' + ${a.id} + '/upload'}"
+                      method="post" enctype="multipart/form-data" style="display:inline;">
+                    <input type="file" name="image" required>
+                    <button type="submit" class="btn btn--upload">📤 Upload</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

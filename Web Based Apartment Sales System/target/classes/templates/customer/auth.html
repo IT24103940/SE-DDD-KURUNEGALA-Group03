@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Authentication</title>
+    <link rel="stylesheet" th:href="@{/css/loginstyle.css}">
+</head>
+<body class="auth-body">
+
+<div class="auth-wrapper">
+    <!-- LEFT SIDE FORM -->
+    <div class="auth-form-side">
+        <h2 id="formTitle">Login</h2>
+
+        <!-- Login Form -->
+        <form id="loginForm" th:action="@{/login}" method="post" class="active">
+            <input type="text" name="username" placeholder="Username or Email" required />
+            <input type="password" name="password" placeholder="Password" required />
+            <button type="submit" class="btn btn--auth">Login</button>
+
+            <div th:if="${param.error}">
+                <p class="error-msg">Invalid username or password!</p>
+            </div>
+            <div th:if="${param.logout}">
+                <p class="success-msg">You have been logged out.</p>
+            </div>
+        </form>
+
+        <!-- Register Form -->
+        <form id="registerForm" th:action="@{/customer/register}" method="post">
+            <input type="hidden" name="type" value="CUSTOMER" />
+            <input type="text" name="fullName" placeholder="Full Name" required />
+            <input type="text" name="username" placeholder="Username" required />
+            <input type="password" name="password" placeholder="Password" required />
+            <input type="email" name="email" placeholder="Email" required />
+            <input type="text" name="phone" placeholder="Phone" required />
+            <button type="submit" class="btn btn--auth">Register</button>
+            <p th:text="${success}" class="success-msg"></p>
+            <p th:text="${error}" class="error-msg"></p>
+        </form>
+
+        <!-- Forgot Password Form -->
+        <form id="forgotForm" th:action="@{/customer/forgot-password}" method="post">
+            <input type="email" name="email" placeholder="Enter your email" required />
+            <button type="submit" class="btn btn--auth">Send Reset Link</button>
+            <p th:text="${success}" class="success-msg"></p>
+            <p th:text="${error}" class="error-msg"></p>
+        </form>
+
+        <div class="links">
+            <a href="javascript:void(0)" onclick="showForm('login')">Login</a> |
+            <a href="javascript:void(0)" onclick="showForm('register')">Register</a> |
+            <a href="javascript:void(0)" onclick="showForm('forgot')">Forgot Password</a>
+        </div>
+    </div>
+
+    <!-- RIGHT SIDE PANEL -->
+    <div class="auth-info-side">
+        <h1>WELCOME BACK!</h1>
+        <p>Secure access to your luxury apartment dashboard.<br> Experience next-level living with comfort and elegance.</p>
+    </div>
+</div>
+
+<script>
+    function showForm(type) {
+        document.querySelectorAll(".auth-form-side form").forEach(f => f.classList.remove("active"));
+        if (type === 'login') {
+            document.getElementById("loginForm").classList.add("active");
+            document.getElementById("formTitle").innerText = "Login";
+        } else if (type === 'register') {
+            document.getElementById("registerForm").classList.add("active");
+            document.getElementById("formTitle").innerText = "Register";
+        } else if (type === 'forgot') {
+            document.getElementById("forgotForm").classList.add("active");
+            document.getElementById("formTitle").innerText = "Forgot Password";
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const def = document.querySelector('.auth-wrapper').getAttribute('data-default') || 'login';
+        showForm(def);
+    });
+    function showForm(type) {
+        const forms = document.querySelectorAll(".auth-form-side form");
+        forms.forEach(f => {
+            f.classList.remove("active");
+            f.style.zIndex = "0";
+        });
+        const target = document.getElementById(type + "Form");
+        target.classList.add("active");
+        target.style.zIndex = "10";
+
+        document.getElementById("formTitle").innerText =
+            type.charAt(0).toUpperCase() + type.slice(1).replace("Form", "");
+
+        // Add slide effect
+        const wrapper = document.querySelector(".auth-wrapper");
+        wrapper.style.transform = "scale(0.98)";
+        setTimeout(() => {
+            wrapper.style.transform = "scale(1)";
+        }, 300);
+    }
+    function showForm(type) {
+        document.querySelectorAll(".auth-form-side form").forEach(f => f.classList.remove("active"));
+        document.getElementById(type + "Form").classList.add("active");
+        document.getElementById("formTitle").innerText =
+            type === "login" ? "Login" : type === "register" ? "Register" : "Forgot Password";
+    }
+
+</script>
+
+</body>
+</html>

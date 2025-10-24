@@ -1,0 +1,1667 @@
+/* -------------------------
+   APARTMENT SALES – LUXURY EDITION
+   PowerPoint-Style Cinematic Motion
+   ------------------------- */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: radial-gradient(circle at top right, #0f2027, #203a43, #2c5364);
+    color: #fff;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+/* ---------- HEADER ---------- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 8%;
+    position: sticky;
+    top: 0;
+    background: rgba(15, 32, 39, 0.6);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    z-index: 1000;
+    animation: fadeDown 1s ease forwards;
+}
+
+header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #ffcc00;
+    letter-spacing: 1px;
+}
+
+nav a {
+    margin: 0 10px;
+    color: #ddd;
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    bottom: -3px;
+    left: 0;
+    background: #ffcc00;
+    transition: width 0.3s ease;
+}
+
+nav a:hover {
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+/* ---------- HERO SECTION ---------- */
+.hero {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 10%;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(15,32,39,0.9), rgba(44,83,100,0.8)),
+    url('/images/luxury-bg.jpg') center/cover no-repeat;
+    background-attachment: fixed;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.6) 80%);
+    z-index: 1;
+}
+
+.hero div {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    animation: heroReveal 1.8s ease;
+}
+
+.hero h1 {
+    font-size: 2.6rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #ffcc00, #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.hero p {
+    color: #ddd;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.btn {
+    display: inline-block;
+    background: linear-gradient(90deg, #ffcc00, #ffd84d);
+    color: #000;
+    padding: 12px 24px;
+    border-radius: 40px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+    transition: all 0.4s ease;
+}
+
+.btn:hover {
+    transform: scale(1.06) translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
+}
+
+/* ---------- SECTIONS ---------- */
+.section {
+    padding: 80px 10%;
+    background: rgba(255,255,255,0.02);
+    backdrop-filter: blur(6px);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    animation: fadeUp 1.2s ease;
+}
+
+.section.dark {
+    background: linear-gradient(135deg, #141e30, #243b55);
+}
+
+.section h2 {
+    font-size: 2rem;
+    color: #ffcc00;
+    margin-bottom: 40px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+/* ---------- GRID + CARDS ---------- */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.card {
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    padding: 24px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+    transition: all 0.5s ease;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.card:hover {
+    transform: translateY(-10px) rotateX(4deg) rotateY(-4deg);
+    box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 16px;
+}
+
+.card h3 {
+    color: #fff;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.card p {
+    color: #aaa;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+}
+
+/* ---------- BUTTON SECONDARY ---------- */
+.btn-secondary {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 40px;
+    background: linear-gradient(90deg, #00d4ff, #0061ff);
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    box-shadow: 0 6px 20px rgba(0, 145, 255, 0.4);
+}
+
+.btn-secondary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(0, 145, 255, 0.7);
+}
+
+/* ---------- FEEDBACK FORM ---------- */
+form textarea, form input, form select {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    transition: background 0.3s ease;
+}
+
+form textarea:focus, form input:focus, form select:focus {
+    outline: none;
+    background: rgba(255,255,255,0.2);
+}
+
+form button {
+    margin-top: 16px;
+    padding: 10px 20px;
+    border: none;
+    background: linear-gradient(90deg, #ffcc00, #ffd84d);
+    color: #000;
+    font-weight: 600;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+form button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(255, 215, 0, 0.6);
+}
+
+/* ---------- FOOTER ---------- */
+footer {
+    text-align: center;
+    padding: 40px 10%;
+    background: rgba(15,32,39,0.9);
+    color: #bbb;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+/* ---------- ANIMATIONS ---------- */
+@keyframes fadeDown {
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(40px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heroReveal {
+    0% { opacity: 0; transform: translateY(50px) scale(0.98); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ---------- SCROLL REVEAL ---------- */
+.section, .card {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease;
+}
+.section.visible, .card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* ---------- Toolbar Layout ---------- */
+.listing-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 1300px;
+    margin: 30px auto 40px auto;
+}
+
+/* Left + Right positioning */
+.toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    justify-content: flex-start;
+    flex: 1;
+}
+.toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: flex-end;
+    flex: 1;
+}
+
+/* ---------- Search Box ---------- */
+.search-box {
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    padding: 4px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
+.search-box input {
+    width: 240px;
+    padding: 12px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 0.95rem;
+    outline: none;
+}
+.search-box button {
+    background: linear-gradient(90deg, #ffcc00, #ffd84d);
+    border: none;
+    padding: 11px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.search-box button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.6);
+}
+
+/* ---------- Sort Box ---------- */
+.sort-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 8px 12px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
+.sort-box select {
+    height: 36px;
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 0.95rem;
+    outline: none;
+}
+.sort-box label {
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.sort-box button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.6);
+}
+
+/* ---------- Filter Popup ---------- */
+.filter-container {
+    position: relative;
+}
+.filter-popup {
+    position: absolute;
+    top: 55px;
+    left: 0;
+    width: 280px;
+    background: rgba(25, 25, 25, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 18px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    display: none;
+    animation: fadeIn 0.3s ease;
+    z-index: 999;
+}
+.filter-popup.visible {
+    display: block;
+}
+.filter-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.filter-grid label {
+    color: #fff;
+    font-size: 0.85rem;
+}
+.filter-grid input,
+.filter-grid select {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    outline: none;
+}
+.filter-grid input:focus,
+.filter-grid select:focus {
+    border-color: #ffcc00;
+    box-shadow: 0 0 8px rgba(255, 204, 0, 0.4);
+}
+.filter-apply {
+    text-align: right;
+}
+.apply-btn {
+    background: linear-gradient(90deg, #ffcc00, #ffd84d);
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.apply-btn:hover {
+    box-shadow: 0 0 12px rgba(255, 204, 0, 0.6);
+}
+
+/* ---------- Filter Button ---------- */
+.icon-button {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #fff;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 25px rgba(255, 204, 0, 0.7);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.icon-button:hover {
+    transform: rotate(12deg) scale(1.1);
+}
+
+/* ---------- Animations ---------- */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(-8px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+    .listing-toolbar {
+        flex-direction: column;
+        gap: 16px;
+    }
+    .toolbar-right {
+        justify-content: flex-start;
+    }
+}
+/* Fix for select dropdown visibility */
+.sort-box select,
+.sort-box select option {
+    color: #fff; /* dropdown text color */
+    background-color: rgba(20, 20, 20, 0.95); /* dark glass background for dropdown */
+}
+
+/* Optional: Hover styling for dropdown options */
+.sort-box select option:hover {
+    background-color: #ffcc00; /* highlight on hover */
+    color: #000;
+}
+
+/* On focus: keep glowing border for consistency */
+.sort-box select:focus {
+    border-color: #ffcc00;
+    box-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+}
+/* -------------------------------
+   PERFECT GLASS TOOLBAR (MATCH EXAMPLE)
+-------------------------------- */
+.listing-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 85%;
+    max-width: 1300px;
+    margin: 50px auto;
+    gap: 40px;
+}
+
+/* Equal glass boxes */
+.toolbar-box {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 18px 24px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+    transition: all 0.3s ease;
+    height: 90px;
+    display: flex;
+    align-items: center;
+}
+.toolbar-box:hover {
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.2);
+    border-color: rgba(255, 204, 0, 0.5);
+}
+
+/* Inner content alignment */
+.left-inner, .right-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* -------------------------------
+   SEARCH FORM (Left box)
+-------------------------------- */
+.search-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.search-form input {
+    width: 220px;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    outline: none;
+}
+.search-form input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+.search-form input:focus {
+    border-color: #ffcc00;
+    box-shadow: 0 0 8px rgba(255, 204, 0, 0.5);
+}
+.search-form button {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #ffcc00, #ffd84d);
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.search-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+}
+
+/* -------------------------------
+   SORT FORM (Right box)
+-------------------------------- */
+.right-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+.sort-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.sort-form label {
+    color: #fff;
+    font-size: 0.95rem;
+}
+.sort-form select {
+    padding: 12px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    outline: none;
+    cursor: pointer;
+}
+.sort-form select option {
+    background: rgba(20, 20, 20, 0.95);
+    color: #fff;
+}
+.sort-form select:hover,
+.sort-form select:focus {
+    border-color: #ffcc00;
+    box-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+}
+
+/* -------------------------------
+   FILTER BUTTON
+-------------------------------- */
+.icon-button {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #fff;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 25px rgba(255, 204, 0, 0.8);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.icon-button:hover {
+    transform: rotate(10deg) scale(1.1);
+    box-shadow: 0 0 30px rgba(255, 204, 0, 1);
+}
+
+/* ---------- FIXED FILTER POPUP ---------- */
+.filter-popup {
+    position: absolute;
+    top: 60px; /* distance below filter button */
+    left: 60px; /* slightly offset to right of filter icon */
+    width: 280px;
+    max-height: 420px; /* compact popup */
+    overflow-y: auto; /* scroll if too many fields */
+    background: rgba(25, 25, 25, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 14px;
+    padding: 16px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
+    display: none;
+    animation: fadeIn 0.25s ease-out;
+    z-index: 9999;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+.filter-popup.visible {
+    display: block;
+}
+
+/* Input + dropdown inside popup */
+.filter-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.filter-grid label {
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+.filter-grid input,
+.filter-grid select {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 0.9rem;
+    outline: none;
+    transition: 0.25s ease;
+}
+.filter-grid input:focus,
+.filter-grid select:focus {
+    border-color: #ffcc00;
+    box-shadow: 0 0 8px rgba(255, 204, 0, 0.5);
+}
+
+/* Apply button */
+.filter-apply {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 6px;
+}
+.apply-btn {
+    background: linear-gradient(90deg, #ffcc00, #ffd84d);
+    border: none;
+    padding: 8px 18px;
+    border-radius: 8px;
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.apply-btn:hover {
+    box-shadow: 0 0 12px rgba(255, 204, 0, 0.6);
+}
+
+/* Subtle fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* -------- PERFECT FLOATING FILTER POPUP -------- */
+.filter-popup {
+    position: absolute;
+    top: 100%; /* vertically center relative to filter button */
+    left: 70px; /* appear slightly right of the filter icon */
+    transform: translateY(-50%); /* perfect vertical centering */
+    width: 200px;
+    max-height: 100px; /* compact size */
+    overflow-y: auto;
+    background: rgba(25, 25, 25, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 14px;
+    padding: 16px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 35px rgba(0, 0, 0, 0.5);
+    display: none;
+    animation: fadeIn 0.25s ease-out;
+    z-index: 9999;
+}
+
+/* Show popup when active */
+.filter-popup.visible {
+    display: block;
+}
+
+/* Compact grid layout */
+.filter-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Label + Input fields */
+.filter-grid label {
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+.filter-grid input,
+.filter-grid select {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 0.9rem;
+    outline: none;
+    transition: 0.25s ease;
+}
+.filter-grid input:focus,
+.filter-grid select:focus {
+    border-color: #ffcc00;
+    box-shadow: 0 0 8px rgba(255, 204, 0, 0.4);
+}
+
+/* Apply button styling */
+.filter-apply {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 6px;
+}
+.apply-btn {
+    background: linear-gradient(90deg, #ffcc00, #ffd84d);
+    border: none;
+    padding: 8px 18px;
+    border-radius: 8px;
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.apply-btn:hover {
+    box-shadow: 0 0 12px rgba(255, 204, 0, 0.6);
+}
+
+/* Smooth fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-50%) scale(0.95); }
+    to { opacity: 1; transform: translateY(-50%) scale(1); }
+}
+/* ---------- Refined Toolbar Layout ---------- */
+.listing-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 1400px;
+    margin: 40px auto;
+    gap: 60px;
+    padding: 0 20px;
+}
+
+/* Equal compact glass boxes (shorter, more elegant) */
+.toolbar-box {
+    flex: 0 0 42%; /* make each take less width, left/right spacing visible */
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 14px 20px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Add glow hover effect for premium polish */
+.toolbar-box:hover {
+    border-color: rgba(255, 204, 0, 0.4);
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.25);
+}
+
+/* Inner content centered nicely */
+.left-inner,
+.right-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Adjust the search input width slightly smaller */
+.search-form input {
+    width: 190px;
+    padding: 10px 12px;
+}
+
+/* Adjust sort dropdown for balance */
+.sort-form select {
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+}
+/* Always bring filter popup to the very front */
+.filter-popup {
+    z-index: 99999 !important;
+    position: absolute;
+}
+
+/* Make sure no parent container hides it */
+.toolbar-box,
+.listing-toolbar,
+body {
+    position: relative;
+    overflow: visible !important;
+    z-index: auto;
+}
+/* Make select dropdown options visible and themed */
+.filter-grid select {
+    background-color: rgba(30, 30, 30, 0.9);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Ensure the opened dropdown menu uses readable colors */
+.filter-grid select option {
+    background-color: #222 !important;
+    color: #fff !important;
+}
+
+/* ---------- STAR RATING ---------- */
+.rating {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 10px 0 20px 0;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    font-size: 28px;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.rating input:checked ~ label,
+.rating label:hover,
+.rating label:hover ~ label {
+    color: #ffcc00;
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 6px rgba(255,204,0,0.6));
+}
+
+/* Reverse order so stars fill left to right */
+.rating {
+    direction: rtl;
+}
+.rating label {
+    display: inline-block;
+}
+
+/* ---------- SUBMIT BUTTON ---------- */
+form button {
+    display: inline-block;
+    background: linear-gradient(90deg, #ffcc00, #ffd84d);
+    color: #000;
+    font-weight: 600;
+    padding: 10px 28px;
+    border-radius: 40px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    box-shadow: 0 6px 16px rgba(255,215,0,0.4);
+}
+
+form button:hover {
+    transform: scale(1.08) translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255,215,0,0.7);
+}
+/* --- Shared Glassmorphism Style --- */
+.support-ticket,
+.feedback-box {
+    position: relative;
+    margin: 0 auto; /* Center horizontally */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 380px; /* Make it smaller */
+    padding: 20px 24px;
+    border-radius: 16px;
+    background: rgba(30, 30, 30, 0.75);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+/* --- Add soft glow on hover --- */
+.support-ticket:hover,
+.feedback-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 40px rgba(255, 215, 0, 0.3);
+}
+
+/* --- Compact heading and content --- */
+.support-ticket h2,
+.feedback-box h2 {
+    font-size: 1.1rem;
+    color: #ffcc00;
+    margin-bottom: 10px;
+}
+
+.support-ticket p,
+.feedback-box p {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 14px;
+}
+
+/* --- Buttons --- */
+.support-ticket button,
+.feedback-box button {
+    background: #ffcc00;
+    border: none;
+    color: #000;
+    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.support-ticket button:hover,
+.feedback-box button:hover {
+    background: #ffd633;
+    transform: scale(1.05);
+}
+
+
+
+/* --- Optional: If they should be centered vertically too --- */
+.center-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    gap: 40px; /* space between feedback & support */
+}
+/* --- Center support + feedback elegantly --- */
+#supportTicket, #support, .support-ticket,
+#feedback, #feedbackBox, .feedback-box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 360px;
+    margin: 20px auto; /* centers horizontally */
+    padding: 20px 24px;
+    border-radius: 16px;
+    background: rgba(30, 30, 30, 0.75);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+/* --- Layout container if both shown together --- */
+.support-feedback-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+/* --- Buttons inside --- */
+#supportTicket button, #support button,
+#feedback button, #feedbackBox button {
+    background: #ffcc00;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 10px;
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+#supportTicket button:hover, #feedback button:hover {
+    transform: scale(1.05);
+    background: #ffd633;
+}
+/* ========================================
+   CENTERED FEEDBACK + SUPPORT SECTIONS
+   (Glassmorphism + Elegant Hover Glow)
+======================================== */
+.support-feedback-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 60px;
+    flex-wrap: wrap;
+    margin: 80px auto;
+    width: 90%;
+    max-width: 1200px;
+}
+
+/* Shared glassmorphic box style */
+.support-ticket,
+.feedback-box {
+    flex: 0 0 420px;
+    padding: 28px 32px;
+    border-radius: 18px;
+    background: rgba(25, 25, 25, 0.7);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+    text-align: center;
+    color: #fff;
+    transition: all 0.35s ease;
+}
+
+.support-ticket:hover,
+.feedback-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 35px rgba(255, 204, 0, 0.25);
+    border-color: rgba(255, 204, 0, 0.35);
+}
+
+/* Compact inner forms */
+.support-ticket form,
+.feedback-box form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.support-ticket input,
+.support-ticket textarea,
+.support-ticket select,
+.feedback-box textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    font-size: 0.95rem;
+    outline: none;
+    transition: 0.25s ease;
+}
+
+.support-ticket input:focus,
+.support-ticket textarea:focus,
+.support-ticket select:focus,
+.feedback-box textarea:focus {
+    border-color: #ffcc00;
+    box-shadow: 0 0 8px rgba(255, 204, 0, 0.4);
+}
+
+/* Headings */
+.support-ticket h2,
+.feedback-box h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #ffcc00;
+    margin-bottom: 10px;
+}
+
+/* Buttons */
+.support-ticket button,
+.feedback-box button {
+    background: linear-gradient(90deg, #ffcc00, #ffd84d);
+    color: #000;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 22px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.support-ticket button:hover,
+.feedback-box button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.6);
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .support-feedback-wrapper {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+    }
+}
+/* ==========================================
+   GROWTH STORIES + FEEDBACK + SUPPORT LAYOUT
+========================================== */
+.growth-stories {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.growth-stories i {
+    font-style: italic;
+    color: rgba(255,255,255,0.8);
+    font-size: 1rem;
+}
+
+/* Two columns layout for feedback + support */
+.support-feedback-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 80px;
+    flex-wrap: wrap;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto 100px auto;
+}
+
+/* Box styles */
+.support-ticket,
+.feedback-box {
+    flex: 0 0 460px;
+    padding: 30px 34px;
+    border-radius: 18px;
+    background: rgba(25, 25, 25, 0.75);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+    text-align: center;
+    color: #fff;
+    transition: all 0.35s ease;
+}
+
+.support-ticket:hover,
+.feedback-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 40px rgba(255, 204, 0, 0.25);
+    border-color: rgba(255, 204, 0, 0.4);
+}
+
+/* Headings */
+.support-ticket h2,
+.feedback-box h2 {
+    font-size: 1.3rem;
+    color: #ffcc00;
+    margin-bottom: 16px;
+}
+
+/* Input fields */
+.support-ticket input,
+.support-ticket textarea,
+.support-ticket select,
+.feedback-box textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    font-size: 0.95rem;
+    outline: none;
+    transition: 0.25s ease;
+}
+
+.support-ticket input:focus,
+.support-ticket textarea:focus,
+.support-ticket select:focus,
+.feedback-box textarea:focus {
+    border-color: #ffcc00;
+    box-shadow: 0 0 8px rgba(255, 204, 0, 0.4);
+}
+
+/* Buttons */
+.support-ticket button,
+.feedback-box button {
+    background: linear-gradient(90deg, #ffcc00, #ffd84d);
+    color: #000;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 22px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.support-ticket button:hover,
+.feedback-box button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.6);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .support-feedback-wrapper {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+    }
+}
+/* ======================================================
+   UNIFORM HEIGHT FOR FEEDBACK + SUPPORT BOXES
+====================================================== */
+.support-feedback-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: stretch; /* ensures both stretch equally */
+    gap: 80px;
+    flex-wrap: wrap;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto 100px auto;
+}
+
+/* Both boxes same height */
+.feedback-box,
+.support-ticket {
+    flex: 0 0 460px;
+    min-height: 480px; /* fixed uniform height */
+    padding: 30px 34px;
+    border-radius: 18px;
+    background: rgba(25, 25, 25, 0.75);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+    text-align: center;
+    color: #fff;
+    transition: all 0.35s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* balances spacing inside */
+}
+
+/* Headings */
+.feedback-box h2,
+.support-ticket h2 {
+    font-size: 1.3rem;
+    color: #ffcc00;
+    margin-bottom: 16px;
+}
+
+/* Buttons at same position bottom */
+.feedback-box form,
+.support-ticket form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Buttons */
+.feedback-box button,
+.support-ticket button {
+    background: linear-gradient(90deg, #ffcc00, #ffd84d);
+    color: #000;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 22px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 16px;
+}
+.feedback-box button:hover,
+.support-ticket button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.6);
+}
+/* =========================================================
+   FINAL LUXURY INFINITE SLIDER – FIXED & SMOOTH
+========================================================= */
+.hero-slider {
+    position: relative;
+    width: 100%;
+    height: 90vh;
+    overflow: hidden;
+    border-radius: 0 0 40px 40px;
+    background: #0f141a;
+}
+
+.slider-wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+/* --- FIXED INFINITE SLIDER WITH SEAMLESS LOOP --- */
+.slider-track {
+    display: flex;
+    width: calc(8 * 100vw); /* 8 slides, each 100vw wide */
+    height: 100%;
+    animation: slideTrack 50s linear infinite; /* faster speed */
+}
+
+@keyframes slideTrack {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-400vw); } /* move exactly 4 slides width */
+}
+
+
+.slide {
+    flex: 0 0 25%;
+    height: 100%;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(80%);
+    transition: transform 0.8s ease;
+}
+.slide:hover img {
+    transform: scale(1.05);
+}
+
+/* Infinite motion */
+@keyframes slideTrack {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+/* Caption Layer */
+.hero-caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+    z-index: 10;
+    pointer-events: auto; /* fixes click issue */
+}
+
+.hero-caption h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #ffe87a;
+    text-shadow: 0 4px 18px rgba(0,0,0,0.7);
+}
+
+.hero-caption p {
+    font-size: 1.1rem;
+    margin-top: 10px;
+    color: #eee;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+}
+
+.hero-btn {
+    display: inline-block;
+    margin-top: 25px;
+    background: linear-gradient(90deg, #ffcc00, #ffd84d);
+    color: #000;
+    font-weight: 600;
+    padding: 12px 28px;
+    border-radius: 10px;
+    text-decoration: none;
+    box-shadow: 0 0 18px rgba(255, 204, 0, 0.4);
+    transition: all 0.3s ease;
+}
+.hero-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255, 204, 0, 0.8);
+}
+
+/* Dark overlay under caption */
+.hero-slider::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 45%, rgba(0,0,0,0.6));
+    z-index: 1;
+}
+
+.hero-slider::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+            rgba(0, 0, 0, 0.45),
+            rgba(0, 0, 0, 0.45)
+    );
+    z-index: 5;
+    pointer-events: none;
+}
+
+
+/* Hover pause for cinematic effect */
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-caption h1 {
+        font-size: 2rem;
+    }
+    .hero-caption p {
+        font-size: 1rem;
+    }
+}
+html {
+    scroll-behavior: smooth;
+}
+/* ---------- APARTMENT DETAILS ICONS ---------- */
+.apartment-details {
+    text-align: center;
+    padding: 60px 0;
+    background: rgba(255,255,255,0.02);
+}
+
+.details-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 60px;
+}
+
+.detail-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.detail-box i {
+    font-size: 30px;
+    color: #ffcc00;
+    transition: all 0.3s ease;
+}
+
+.detail-box:hover i {
+    transform: scale(1.2);
+    color: #ffd84d;
+}
+
+/* ---------- CONTACT INFO SECTION ---------- */
+.contact-info {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    padding: 60px 10%;
+    text-align: left;
+    color: #fff;
+}
+
+.contact-info h2 {
+    font-size: 1.5rem;
+    color: #ffcc00;
+    margin-bottom: 30px;
+}
+
+.info-list div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 12px 0;
+    line-height: 1.4;
+    font-size: 0.95rem;
+}
+
+.info-list i {
+    background: #0b1830;
+    padding: 10px;
+    border-radius: 8px;
+    color: #ffcc00;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---------- SOCIAL ICONS ---------- */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.social-icons a {
+    background: #14264b;
+    color: white;
+    font-size: 18px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    background: #ffcc00;
+    color: #000;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.6);
+}
+/* ---------- APARTMENT CARD ICONS ---------- */
+.apt-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ffcc00;
+    font-weight: 500;
+    margin-top: 6px;
+}
+
+.apt-info i {
+    font-size: 1rem;
+    color: #ffcc00;
+}
+
+.apt-specs {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 15px;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.spec-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #ddd;
+    transition: all 0.3s ease;
+}
+
+.spec-item i {
+    color: #ffcc00;
+    font-size: 1rem;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.spec-item:hover i {
+    color: #ffd84d;
+    transform: scale(1.2);
+}
+.support-ticket {
+    position: relative !important;
+    overflow: visible !important;
+    isolation: isolate;
+    z-index: 99999 !important;
+}
+.support-ticket select {
+    position: relative !important;
+    z-index: 999999 !important;
+    background-color: rgba(25,25,25,0.95);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.3);
+    backdrop-filter: blur(6px);
+}
+select::-webkit-scrollbar {
+    z-index: 999999 !important;
+}
+/* ================================
+   SUPPORT TICKET DROPDOWN VISIBILITY FIX
+   - Ensures the <select> dropdown isn't clipped by overflow on ancestors
+   - Gives the select a very large z-index and forces visible overflow
+   - Safe, minimal and specific overrides
+   ================================ */
+
+/* Make sure the support ticket container and immediate ancestors don't clip dropdowns */
+#supportTicket, .support-ticket, .support-feedback-wrapper, .container, .section {
+    overflow: visible !important;
+}
+
+/* Ensure the select itself renders above everything else */
+.support-ticket select {
+    position: relative !important;
+    z-index: 2147483646 !important; /* near max to avoid conflicts */
+    -webkit-appearance: menulist-button; /* prefer native drop-down look */
+    appearance: menulist-button;
+    background-color: rgba(255,255,255,0.06) !important;
+    color: #fff !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+}
+
+/* Make options readable (the OS/browser will usually render native popup, but this helps themed selects) */
+.support-ticket select option {
+    background-color: #111 !important;
+    color: #fff !important;
+}
+
+/* Also ensure any wrapper (if present) doesn't clip */
+.support-ticket .select-wrapper {
+    overflow: visible !important;
+    position: relative !important;
+    z-index: 2147483646 !important;
+}
+
+/* If a parent has transform property it can create a new stacking context that clips native dropdowns in some browsers.
+   Add this hint to avoid transform on nearby wrappers where possible. */
+.support-ticket, #supportTicket {
+    transform: none !important;
+}
+
+/* Small accessibility improvement: visible focus */
+.support-ticket select:focus {
+    outline: 3px solid rgba(255,204,0,0.22) !important;
+    outline-offset: 2px;
+}
+
+/* End of dropdown visibility fixes */
+

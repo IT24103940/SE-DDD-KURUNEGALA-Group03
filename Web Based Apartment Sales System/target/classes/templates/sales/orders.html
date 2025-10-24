@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>💼 Sales Orders – Refined Luxury Edition</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
+
+        body {
+            background: radial-gradient(circle at top right, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* ---------- HERO NAV ---------- */
+        .hero-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px 40px;
+            border-radius: 16px;
+            margin: 40px auto 20px;
+            width: 85%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .hero-nav h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(90deg, #ffb347, #ffcc33);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(255, 204, 51, 0.3);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hero-buttons button {
+            border: none;
+            padding: 12px 26px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .btn-dashboard {
+            background: linear-gradient(135deg, #7c5cff, #a58bff);
+            box-shadow: 0 0 15px rgba(124, 92, 255, 0.3);
+        }
+        .btn-dashboard:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(160, 128, 255, 0.6);
+        }
+
+        .btn-logout {
+            background: linear-gradient(135deg, #ff3d3d, #ff6b4a);
+            box-shadow: 0 0 15px rgba(255, 61, 61, 0.4);
+        }
+        .btn-logout:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 61, 61, 0.8);
+        }
+
+        /* ---------- MAIN CONTAINER ---------- */
+        .container {
+            width: 85%;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px 50px;
+            margin: 0 auto 80px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(14px);
+            position: relative;
+            overflow: visible;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 1.9rem;
+            color: #ffcc00;
+            margin-bottom: 25px;
+            text-shadow: 0 0 15px rgba(255, 204, 0, 0.4);
+        }
+
+        /* ---------- BUTTONS ---------- */
+        .btn {
+            border: none;
+            border-radius: 25px;
+            color: #fff;
+            font-weight: 600;
+            padding: 10px 22px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            margin: 3px;
+        }
+
+        .btn--create {
+            background: linear-gradient(135deg, #7c5cff, #a58bff);
+            box-shadow: 0 0 15px rgba(124, 92, 255, 0.3);
+        }
+        .btn--create:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(160, 128, 255, 0.6);
+        }
+
+        .btn--upload {
+            background: linear-gradient(135deg, #ffd84a, #ffec99);
+            color: #222;
+            font-weight: 700;
+        }
+        .btn--upload:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 216, 74, 0.6);
+        }
+
+        .btn--edit {
+            background: linear-gradient(135deg, #00c853, #00e676);
+        }
+        .btn--edit:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(0, 230, 118, 0.6);
+        }
+
+        .btn--delete {
+            background: linear-gradient(135deg, #ff3d3d, #ff6b4a);
+        }
+        .btn--delete:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 61, 61, 0.6);
+        }
+
+        .btn--cancel {
+            background: linear-gradient(135deg, #ff8a00, #ffb347);
+            color: #222;
+            font-weight: 700;
+        }
+        .btn--cancel:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 179, 71, 0.7);
+        }
+
+        /* ---------- TABLE ---------- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            margin-top: 25px;
+            border-radius: 14px;
+            overflow: visible;
+            position: relative;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffcc00;
+            font-weight: 600;
+            padding: 12px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            color: #ddd;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+            transition: 0.3s ease;
+        }
+
+        /* ---------- FORMS ---------- */
+        form {
+            margin: 0;
+            display: inline-block;
+        }
+
+        select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 8px 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            z-index: 10;
+        }
+
+        select option {
+            background: #1b242d;
+            color: #fff;
+            border: none;
+        }
+
+        input[type="file"] {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ccc;
+            padding: 6px;
+            margin-top: 5px;
+            width: 100%;
+        }
+
+        input[type="file"]::-webkit-file-upload-button {
+            background: rgba(255, 255, 255, 0.25);
+            border: none;
+            color: #fff;
+            border-radius: 8px;
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+
+        input[type="file"]::-webkit-file-upload-button:hover {
+            background: rgba(255, 255, 255, 0.35);
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HERO NAV -->
+<div class="hero-nav">
+    <h1>💼 Sales Orders</h1>
+    <div class="hero-buttons">
+        <a th:href="@{/sales}">
+            <button class="btn-dashboard">⬅️ Back to Dashboard</button>
+        </a>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn-logout">🔒 Logout</button>
+        </form>
+    </div>
+</div>
+
+<!-- MAIN CONTAINER -->
+<div class="container">
+
+    <h2>✨ Sales Orders</h2>
+
+    <div th:if="${errorMessage}" style="color:red; margin: 10px 0;">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
+    <div style="text-align:center; margin-bottom:25px;">
+        <a th:href="@{/sales/orders/new}">
+            <button class="btn btn--create">➕ New Sales Order</button>
+        </a>
+    </div>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Lead</th>
+            <th>Apartment</th>
+            <th>Customer</th>
+            <th>Sales Manager</th>
+            <th>Status</th>
+            <th>Total Amount</th>
+            <th>Signed At</th>
+            <th>Documents</th>
+            <th>Action</th>
+        </tr>
+
+        <tr th:each="o : ${orders}">
+            <td th:text="${o.id}"></td>
+            <td th:text="${o.lead != null ? o.lead.id : '—'}"></td>
+            <td th:text="${o.apartment != null ? o.apartment.title : '—'}"></td>
+            <td th:text="${o.customer != null ? o.customer.username : '—'}"></td>
+            <td th:text="${o.salesManager != null ? o.salesManager.username : '—'}"></td>
+            <td th:text="${o.status}"></td>
+            <td th:text="${o.totalAmount}"></td>
+            <td th:text="${o.signedAt}"></td>
+
+            <td>
+                <form th:action="@{'/documents/order/' + ${o.id} + '/upload'}" method="post" enctype="multipart/form-data">
+                    <select name="type">
+                        <option value="CONTRACT">CONTRACT</option>
+                        <option value="KYC">KYC</option>
+                        <option value="OTHER">OTHER</option>
+                    </select>
+                    <input type="file" name="file" required/>
+                    <button type="submit" class="btn btn--upload">📤 Upload</button>
+                </form>
+            </td>
+
+            <td>
+                <a th:href="@{'/sales/orders/' + ${o.id} + '/edit'}">
+                    <button type="button" class="btn btn--edit">🖊️ Edit</button>
+                </a>
+                <form th:action="@{'/sales/orders/' + ${o.id} + '/delete'}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn--delete">🗑️ Delete</button>
+                </form>
+                <form th:if="${o.status == T(Group3.demo.Entity.enums.SalesOrderStatus).PENDING}"
+                      th:action="@{'/sales/orders/' + ${o.id} + '/cancel'}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn--cancel">⚠️ Cancel</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+</div>
+</body>
+</html>

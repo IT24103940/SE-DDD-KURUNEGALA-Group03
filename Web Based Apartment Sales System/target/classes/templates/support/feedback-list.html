@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Feedback Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        /* ---------- BACKGROUND ---------- */
+        body {
+            background: radial-gradient(circle at top right, #0b141b, #203a43, #0e1a21);
+            font-family: "Poppins", sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            animation: gradientShift 12s ease infinite alternate;
+        }
+
+
+        /* ---------- HERO NAV ---------- */
+        .hero-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 90%;
+            max-width: 1100px;
+            margin: 40px auto 50px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 18px 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(15px);
+        }
+
+        .hero-title {
+            flex: 1;
+            text-align: center;
+            color: #ffcc00;
+            font-size: 1.9rem;
+            font-weight: 700;
+            text-shadow: 0 0 18px rgba(255, 204, 0, 0.8);
+        }
+
+        .btn-nav {
+            border: none;
+            border-radius: 40px;
+            padding: 10px 25px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #fff;
+            transition: 0.3s;
+        }
+
+        .btn-nav.purple {
+            background: linear-gradient(135deg, #7c5cff, #a58bff);
+            box-shadow: 0 0 15px rgba(124, 92, 255, 0.5);
+        }
+
+        .btn-nav.purple:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(160, 128, 255, 0.9);
+        }
+
+        .btn-nav.red {
+            background: linear-gradient(135deg, #ff4d4d, #e60000);
+            box-shadow: 0 0 18px rgba(255, 77, 77, 0.5);
+        }
+
+        .btn-nav.red:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(255, 77, 77, 0.9);
+        }
+
+        /* ---------- CONTAINER ---------- */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(15px);
+        }
+
+        h2 {
+            color: #ffcc00;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.6);
+        }
+
+        /* ---------- TABLE ---------- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 15px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: center;
+        }
+
+        th {
+            color: #ffcc00;
+            font-weight: 600;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        td {
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* ---------- ACTION BUTTONS ---------- */
+        .btn {
+            border: none;
+            border-radius: 40px;
+            padding: 8px 20px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: #fff;
+            transition: all 0.3s;
+        }
+
+        .btn-approve {
+            background: linear-gradient(135deg, #00c851, #007e33);
+            box-shadow: 0 0 15px rgba(0, 200, 81, 0.5);
+        }
+
+        .btn-approve:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(0, 255, 81, 0.9);
+        }
+
+        .btn-reject {
+            background: linear-gradient(135deg, #ffbb33, #ff8800);
+            box-shadow: 0 0 15px rgba(255, 187, 51, 0.5);
+        }
+
+        .btn-reject:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(255, 187, 51, 0.9);
+        }
+
+        .btn-delete {
+            background: linear-gradient(135deg, #ff4d4d, #cc0000);
+            box-shadow: 0 0 15px rgba(255, 77, 77, 0.5);
+        }
+
+        .btn-delete:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(255, 77, 77, 0.9);
+        }
+
+        a {
+            color: #a58bff;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        a:hover {
+            color: #c3b4ff;
+        }
+    </style>
+</head>
+<body>
+
+<!-- HERO BAR -->
+<header class="hero-bar">
+    <a th:href="@{/support}" class="btn-nav purple">⬅️ Back</a>
+    <h1 class="hero-title">🧾 Customer Feedback Management</h1>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit" class="btn-nav red">🔒 Logout</button>
+    </form>
+</header>
+
+<!-- FEEDBACK TABLE -->
+<div class="container">
+    <h2>📋 Customer Feedback Management</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Customer</th>
+            <th>Message</th>
+            <th>Rating</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Actions</th>
+        </tr>
+        <tr th:each="fb : ${feedbackList}">
+            <td th:text="${fb.id}"></td>
+            <td th:text="${fb.customer.fullName}"></td>
+            <td th:text="${fb.message}"></td>
+            <td th:text="${fb.rating}"></td>
+            <td th:text="${fb.status}"></td>
+            <td th:text="${#temporals.format(fb.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+            <td>
+                <form th:action="@{'/support/feedback/' + ${fb.id} + '/approve'}" method="post" style="display:inline">
+                    <button type="submit" th:if="${fb.status.name() == 'PENDING'}" class="btn btn-approve">✅ Approve</button>
+                </form>
+                <form th:action="@{'/support/feedback/' + ${fb.id} + '/reject'}" method="post" style="display:inline">
+                    <button type="submit" th:if="${fb.status.name() == 'PENDING'}" class="btn btn-reject">⚠️ Reject</button>
+                </form>
+                <form th:action="@{'/support/feedback/' + ${fb.id} + '/delete'}" method="post" style="display:inline">
+                    <button type="submit" class="btn btn-delete">🗑️ Delete</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+    <a th:href="@{/support}">⬅ Back to Dashboard</a>
+</div>
+
+</body>
+</html>

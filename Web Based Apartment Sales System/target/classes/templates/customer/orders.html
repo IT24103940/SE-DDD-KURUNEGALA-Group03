@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Orders</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        /* ---------- BACKGROUND ---------- */
+        body {
+            background: radial-gradient(circle at top right, #0b141b, #203a43, #0e1a21);
+            font-family: "Poppins", sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            animation: gradientShift 12s ease infinite alternate;
+        }
+
+
+        /* ---------- CONTAINER ---------- */
+        .container {
+            width: 85%;
+            max-width: 1000px;
+            margin: 80px auto;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(15px);
+        }
+
+        h2 {
+            color: #ffcc00;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-shadow: 0 0 12px rgba(255, 204, 0, 0.6);
+        }
+
+        /* ---------- TABLE ---------- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 15px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: center;
+        }
+
+        th {
+            color: #ffcc00;
+            font-weight: 600;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        td {
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* ---------- STATUS COLORS ---------- */
+        .status-completed {
+            color: #00ff80;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            color: #ffcc00;
+            font-weight: 600;
+        }
+
+        .status-cancelled {
+            color: #ff4d4d;
+            font-weight: 600;
+        }
+
+        /* ---------- LINKS / BUTTONS ---------- */
+        a {
+            color: #a58bff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            color: #c4b5ff;
+            text-shadow: 0 0 10px rgba(164, 132, 255, 0.6);
+        }
+
+        .btn-details {
+            background: linear-gradient(135deg, #7c5cff, #a58bff);
+            border: none;
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(124, 92, 255, 0.4);
+        }
+
+        .btn-details:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(160, 128, 255, 0.9);
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 20px;
+            color: #a58bff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .back-home:hover {
+            color: #c4b5ff;
+            text-shadow: 0 0 10px rgba(164, 132, 255, 0.6);
+        }
+
+        /* ---------- ICONS ---------- */
+        .emoji {
+            margin-right: 6px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>🛒 My Orders</h2>
+    <table>
+        <tr><th>🆔 ID</th><th>🏠 Item</th><th>📊 Status</th><th>💰 Amount</th><th>⚙️ Action</th></tr>
+        <tr th:each="o : ${orders}">
+            <td th:text="${o.id}"></td>
+            <td>
+                <span th:if="${o.apartment != null}" th:text="${o.apartment.title}"></span>
+                <span th:if="${o.apartment == null}">🏷️ Promotion</span>
+            </td>
+            <td th:text="${o.status}"></td>
+            <td th:text="${o.totalAmount}"></td>
+            <td>
+                <a th:href="@{'/customer/orders/' + ${o.id}}">🔍 Details</a>
+            </td>
+        </tr>
+    </table>
+    <a th:href="@{/home}">🏠 Back to Home</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>💰 Finance Assistant Dashboard – Luxury Edition</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at top right, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* ---------- HEADER ---------- */
+        .hero-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.05);
+            padding: 20px 40px;
+            border-radius: 16px;
+            margin: 40px auto;
+            width: 85%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .hero-nav h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(90deg,#ffb347,#ffcc33);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255,204,51,0.4);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-logout {
+            border: none;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(135deg,#ff3d3d,#ff6b4a);
+            box-shadow: 0 0 15px rgba(255,61,61,0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255,61,61,0.8);
+        }
+
+        /* ---------- DASHBOARD ---------- */
+        .dashboard-container {
+            width: 85%;
+            max-width: 1100px;
+            margin: 0 auto 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            width: 100%;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 30px 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(14px);
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(160,128,255,0.4);
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            color: #ffcc00;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(255,204,0,0.4);
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: #cfcfcf;
+            margin-bottom: 25px;
+        }
+
+        .card button {
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            background: linear-gradient(135deg,#7c5cff,#a58bff);
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(124,92,255,0.3);
+        }
+
+        .card button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(160,128,255,0.6);
+        }
+
+        /* ---------- FOOTER ---------- */
+        .actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="hero-nav">
+    <h1>💰 Finance Assistant Dashboard</h1>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit" class="btn-logout">🔒 Logout</button>
+    </form>
+</div>
+
+<!-- DASHBOARD GRID -->
+<div class="dashboard-container">
+    <div class="card-grid">
+
+        <div class="card">
+            <h3>🧾 Invoices</h3>
+            <p>View and manage invoices (no manual creation).</p>
+            <a th:href="@{/finance/invoices}">
+                <button type="button">Go to Invoices</button>
+            </a>
+        </div>
+
+        <div class="card">
+            <h3>💳 Payments</h3>
+            <p>Record and adjust payments.</p>
+            <a th:href="@{/finance/payments}">
+                <button type="button">Go to Payments</button>
+            </a>
+        </div>
+
+        <div class="card">
+            <h3>💼 Expenses</h3>
+            <p>Track and edit expenses.</p>
+            <a th:href="@{/finance/expenses}">
+                <button type="button">Go to Expenses</button>
+            </a>
+        </div>
+
+        <div class="card">
+            <h3>📊 Reports</h3>
+            <p>See finance summaries and reports.</p>
+            <a th:href="@{/finance/reports}">
+                <button type="button">View Reports</button>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

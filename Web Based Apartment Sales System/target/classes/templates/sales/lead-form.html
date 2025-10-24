@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>🧾 Create Lead – Ultra Luxury Edition</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
+
+        body {
+            background: radial-gradient(circle at top right, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* ---------- HERO NAV ---------- */
+        .hero-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px 40px;
+            border-radius: 16px;
+            margin-top: 40px;
+            width: 85%;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .hero-nav h1 {
+            font-size: 1.9rem;
+            background: linear-gradient(90deg, #ffb347, #ffcc33);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(255, 204, 51, 0.3);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hero-buttons button {
+            border: none;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-dashboard {
+            background: linear-gradient(135deg, #7c5cff, #a58bff);
+            box-shadow: 0 0 15px rgba(124, 92, 255, 0.3);
+        }
+        .btn-dashboard:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(160, 128, 255, 0.6);
+        }
+
+        .btn-logout {
+            background: linear-gradient(135deg, #ff3d3d, #ff6b4a);
+            box-shadow: 0 0 15px rgba(255, 61, 61, 0.4);
+        }
+        .btn-logout:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 61, 61, 0.8);
+        }
+
+        /* ---------- CENTERED FORM CONTAINER ---------- */
+        .center-wrapper {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+
+        .container {
+            width: 70%;
+            max-width: 950px;
+            background: rgba(0, 0, 0, 0.45);
+            border-radius: 25px;
+            padding: 60px 70px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: #ffcc00;
+            margin-bottom: 40px;
+            text-shadow: 0 0 15px rgba(255, 204, 0, 0.4);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            width: 100%;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #ffcc00;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #a58bff;
+            box-shadow: 0 0 15px rgba(160, 128, 255, 0.5);
+        }
+
+        select option {
+            background: #18232d;
+            color: #fff;
+            font-size: 0.95rem;
+        }
+
+        /* ---------- BUTTONS ---------- */
+        .btn {
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            font-weight: 600;
+            padding: 14px 32px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .btn--save {
+            background: linear-gradient(135deg, #7c5cff, #a58bff);
+            box-shadow: 0 0 15px rgba(124, 92, 255, 0.3);
+        }
+        .btn--save:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(160, 128, 255, 0.6);
+        }
+
+        .btn--cancel {
+            background: linear-gradient(135deg, #ff3d3d, #ff6b4a);
+            box-shadow: 0 0 15px rgba(255, 61, 61, 0.3);
+        }
+        .btn--cancel:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 61, 61, 0.7);
+        }
+
+        /* ---------- BUTTON ALIGNMENT ---------- */
+        .form-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .btn--save, .btn--cancel {
+            width: 180px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Hero Section -->
+<div class="hero-nav">
+    <h1>🧾 Create Lead</h1>
+    <div class="hero-buttons">
+        <a th:href="@{/sales}">
+            <button class="btn-dashboard">⬅️ Back to Dashboard</button>
+        </a>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn-logout">🔒 Logout</button>
+        </form>
+    </div>
+</div>
+
+<!-- Centered Form Section -->
+<div class="center-wrapper">
+    <div class="container">
+        <h2>✨ Create Lead</h2>
+        <form th:action="@{/sales/leads}" method="post" th:object="${lead}">
+
+            <div class="form-group">
+                <label>🏢 Apartment</label>
+                <select th:field="*{apartmentId}">
+                    <option th:each="a : ${apartments}" th:text="${a.code}" th:value="${a.id}"></option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>👤 Customer</label>
+                <select th:field="*{customerId}">
+                    <option th:each="c : ${customers}" th:text="${c.fullName}" th:value="${c.id}"></option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>📊 Status</label>
+                <select th:field="*{status}">
+                    <option th:each="s : ${statuses}" th:text="${s}" th:value="${s}"></option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>📣 Source</label>
+                <input th:field="*{source}" placeholder="Enter source (e.g., website, referral)">
+            </div>
+
+            <div class="form-group">
+                <label>📝 Notes</label>
+                <textarea th:field="*{notes}" placeholder="Additional notes"></textarea>
+            </div>
+
+            <div class="form-buttons">
+                <button type="submit" class="btn btn--save">💾 Save</button>
+                <a th:href="@{/sales/leads}">
+                    <button type="button" class="btn btn--cancel">❌ Cancel</button>
+                </a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

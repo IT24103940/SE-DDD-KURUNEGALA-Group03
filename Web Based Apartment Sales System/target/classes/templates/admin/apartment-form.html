@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>🏢 Apartment Form</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at top right, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ---------- HERO NAV ---------- */
+        .hero-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 85%;
+            max-width: 1200px;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 20px 40px;
+            border-radius: 18px;
+            margin-top: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .hero-nav h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(90deg, #ffcc70, #ff8177);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(255, 204, 112, 0.3);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .hero-buttons button {
+            border: none;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 15px rgba(124, 92, 255, 0.3);
+        }
+
+        .hero-buttons .back-btn {
+            background: linear-gradient(135deg, #7c5cff, #a58bff);
+        }
+
+        .hero-buttons .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(160, 128, 255, 0.6);
+        }
+
+        /* 🔴 System-wide Logout Button */
+        .hero-buttons .logout-btn {
+            background: linear-gradient(135deg, #ff3d3d, #ff6b4a);
+            box-shadow: 0 0 15px rgba(255, 61, 61, 0.4);
+        }
+
+        .hero-buttons .logout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(255, 61, 61, 0.7);
+        }
+
+        /* ---------- FORM CONTAINER ---------- */
+        .form-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px 50px;
+            margin-top: 40px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #ffcc00;
+            margin-bottom: 25px;
+            text-shadow: 0 0 12px rgba(255, 204, 0, 0.4);
+            font-weight: 700;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: block;
+            color: #eee;
+            letter-spacing: 0.5px;
+        }
+
+        input, select, textarea {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            color: #fff;
+            padding: 12px 14px;
+            font-size: 1rem;
+            transition: 0.3s;
+            width: 100%;
+            z-index: 10;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #ffcc00;
+            box-shadow: 0 0 12px rgba(255, 204, 0, 0.4);
+            transform: scale(1.01);
+        }
+
+        /* Fix for dropdown visibility */
+        select {
+            position: relative;
+            z-index: 100;
+            background-color: rgba(30, 30, 30, 0.9);
+            color: #fff;
+        }
+
+        option {
+            background-color: #1e1e1e;
+            color: #fff;
+        }
+
+        textarea { resize: none; height: 90px; }
+
+        /* ---------- BUTTONS ---------- */
+        .save-btn {
+            background: linear-gradient(135deg, #7c5cff, #a58bff);
+            border: none;
+            color: #fff;
+            font-size: 1rem;
+            padding: 14px 0;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            transition: 0.4s ease;
+            box-shadow: 0 0 20px rgba(124, 92, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(155, 93, 229, 0.7);
+        }
+
+        .back-lower {
+            display: block;
+            margin: 25px auto 0;
+            background: linear-gradient(135deg, #7c5cff, #a58bff);
+            color: #fff;
+            padding: 10px 30px;
+            border-radius: 30px;
+            box-shadow: 0 0 15px rgba(124, 92, 255, 0.3);
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .back-lower:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(160, 128, 255, 0.6);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero-nav">
+    <h1>🏠 Apartment Form</h1>
+    <div class="hero-buttons">
+        <a th:href="@{/admin}"><button class="back-btn">⬅️ Back to Dashboard</button></a>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="logout-btn">🔒 Logout</button>
+        </form>
+    </div>
+</div>
+
+<!-- Form -->
+<div class="form-container">
+    <h2>✨ Apartment Details</h2>
+
+    <form th:action="${apartmentId} != null ? @{'/admin/apartments/' + ${apartmentId}} : @{/admin/apartments}"
+          method="post" th:object="${apartment}">
+        <label>🏷️ Code</label>
+        <input th:field="*{code}" placeholder="Enter Code" required/>
+
+        <label>🏠 Title</label>
+        <input th:field="*{title}" placeholder="Enter Title" required/>
+
+        <label>📍 City</label>
+        <input th:field="*{city}" placeholder="Enter City"/>
+
+        <label>💰 Price</label>
+        <input th:field="*{price}" placeholder="Enter Price" type="number" step="0.01" required/>
+
+        <label>📦 Status</label>
+        <select th:field="*{status}">
+            <option th:value="AVAILABLE">✅ AVAILABLE</option>
+            <option th:value="RESERVED">🕒 RESERVED</option>
+            <option th:value="SOLD">🚫 SOLD</option>
+        </select>
+
+        <label>🛏 Bedrooms</label>
+        <input th:field="*{bedrooms}" type="number" placeholder="Bedrooms"/>
+
+        <label>🛁 Bathrooms</label>
+        <input th:field="*{bathrooms}" type="number" placeholder="Bathrooms"/>
+
+        <label>📐 Area (SqFt)</label>
+        <input th:field="*{areaSqFt}" type="number" placeholder="Area SqFt"/>
+
+        <label>📝 Description</label>
+        <textarea th:field="*{description}" placeholder="Enter Description"></textarea>
+
+        <button type="submit" class="save-btn">💾 Save Apartment</button>
+    </form>
+
+    <a th:href="@{/admin/apartments}">
+        <button type="button" class="back-lower">⬅ Back</button>
+    </a>
+</div>
+</body>
+</html>

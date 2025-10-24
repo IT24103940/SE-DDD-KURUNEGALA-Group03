@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Finance Reports</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        /* ---------- HERO NAV BAR ---------- */
+        .hero-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 90%;
+            max-width: 1100px;
+            margin: 30px auto 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 18px 40px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+        }
+
+        .hero-title {
+            flex: 1;
+            text-align: center;
+            color: #ffcc00;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+        }
+
+        .btn-nav {
+            text-decoration: none;
+            border: none;
+            border-radius: 40px;
+            padding: 10px 25px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.3s;
+            color: #fff;
+        }
+
+        /* Purple Buttons */
+        .btn-nav.purple {
+            background: linear-gradient(135deg, #7c5cff, #a58bff);
+            box-shadow: 0 0 15px rgba(124, 92, 255, 0.5);
+        }
+        .btn-nav.purple:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(160, 128, 255, 0.9);
+        }
+
+        /* ---------- TABLE + SECTION ---------- */
+        section {
+            margin-bottom: 50px;
+        }
+        table {
+            width: 95%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        th, td {
+            padding: 14px;
+            text-align: center;
+            color: #fff;
+        }
+        th {
+            color: #ffcc00;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+    </style>
+</head>
+<body>
+<!-- HERO BAR -->
+<header class="hero-bar">
+    <div class="hero-left">
+        <a th:href="@{/finance/invoices}" class="btn-nav purple">⬅ Back</a>
+    </div>
+    <h1 class="hero-title">📊 Finance Reports</h1>
+    <div class="hero-right">
+        <a th:href="@{/finance/payments}" class="btn-nav purple">💳 Payments</a>
+    </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+    <section>
+        <h3>💸 Sales vs Promotions Effectiveness</h3>
+        <div style="display:flex; gap:40px; flex-wrap:wrap;">
+            <div>
+                <h4>With Promotion</h4>
+                <p>Orders: <strong th:text="${salesSummary['withPromo']['count']}"></strong></p>
+                <p>Discount Given: <strong th:text="${salesSummary['withPromo']['discountTotal']}"></strong></p>
+                <p>Net Revenue: <strong th:text="${salesSummary['withPromo']['netTotal']}"></strong></p>
+            </div>
+            <div>
+                <h4>Without Promotion</h4>
+                <p>Orders: <strong th:text="${salesSummary['withoutPromo']['count']}"></strong></p>
+                <p>Net Revenue: <strong th:text="${salesSummary['withoutPromo']['netTotal']}"></strong></p>
+            </div>
+        </div>
+
+        <h4>🎯 By Promotion</h4>
+        <table>
+            <tr><th>ID</th><th>Promotion</th><th>Orders</th><th>Discount Total</th><th>Net Revenue</th></tr>
+            <tr th:each="p : ${salesSummary['perPromotion']}">
+                <td th:text="${p['promotionId']}"></td>
+                <td th:text="${p['promotionTitle']}"></td>
+                <td th:text="${p['orders']}"></td>
+                <td th:text="${p['discountTotal']}"></td>
+                <td th:text="${p['netTotal']}"></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(salesSummary['perPromotion'])}">
+                <td colspan="5"><i>No promotion orders yet.</i></td>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <h3>💰 Payment Aging</h3>
+        <table>
+            <tr><th>Bucket</th><th>Count</th><th>Outstanding</th></tr>
+            <tr>
+                <td>Current</td>
+                <td th:text="${aging['buckets']['CURRENT']['count']}"></td>
+                <td th:text="${aging['buckets']['CURRENT']['outstanding']}"></td>
+            </tr>
+            <tr>
+                <td>1–30 Days</td>
+                <td th:text="${aging['buckets']['DUE_1_30']['count']}"></td>
+                <td th:text="${aging['buckets']['DUE_1_30']['outstanding']}"></td>
+            </tr>
+            <tr>
+                <td>31–60 Days</td>
+                <td th:text="${aging['buckets']['DUE_31_60']['count']}"></td>
+                <td th:text="${aging['buckets']['DUE_31_60']['outstanding']}"></td>
+            </tr>
+            <tr>
+                <td>61–90 Days</td>
+                <td th:text="${aging['buckets']['DUE_61_90']['count']}"></td>
+                <td th:text="${aging['buckets']['DUE_61_90']['outstanding']}"></td>
+            </tr>
+            <tr>
+                <td>90+ Days</td>
+                <td th:text="${aging['buckets']['DUE_90_PLUS']['count']}"></td>
+                <td th:text="${aging['buckets']['DUE_90_PLUS']['outstanding']}"></td>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <h3>📅 Revenue by Month (Last 12)</h3>
+        <table>
+            <tr><th>Month</th><th>Payments</th><th>Expenses</th><th>Net</th></tr>
+            <tr th:each="m : ${monthly}">
+                <td th:text="${m['month']}"></td>
+                <td th:text="${m['payments']}"></td>
+                <td th:text="${m['expenses']}"></td>
+                <td th:text="${m['net']}"></td>
+            </tr>
+        </table>
+    </section>
+</div>
+</body>
+
+</html>
+

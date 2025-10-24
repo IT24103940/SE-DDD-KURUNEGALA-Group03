@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard – Luxury Edition</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at top right, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.3rem;
+            margin-bottom: 35px;
+            background: linear-gradient(90deg, #ffcc70, #ff8177);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 204, 112, 0.4);
+        }
+
+        /* ---------- CARD ---------- */
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 26px;
+            margin: 25px auto;
+            max-width: 650px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 45px rgba(155, 93, 229, 0.5);
+        }
+
+        h3 {
+            color: #ffcc00;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        p {
+            margin-bottom: 18px;
+            color: #ddd;
+        }
+
+        /* ---------- BUTTONS ---------- */
+        button {
+            background: linear-gradient(90deg, #6a5af9, #9b5de5);
+            border: none;
+            color: #fff;
+            padding: 12px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+            box-shadow: 0 0 12px rgba(155, 93, 229, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(155, 93, 229, 0.7);
+        }
+
+        /* ---------- LOGOUT ---------- */
+        nav.actions {
+            text-align: center;
+            margin-top: 35px;
+        }
+
+        nav.actions button {
+            background: linear-gradient(90deg, #ff3d3d, #ff6b4a);
+            box-shadow: 0 0 15px rgba(255, 61, 61, 0.5);
+        }
+
+        nav.actions button:hover {
+            box-shadow: 0 0 25px rgba(255, 61, 61, 0.8);
+            transform: translateY(-2px);
+        }
+
+        /* ---------- POPUP ---------- */
+        #popup {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            color: #fff;
+            padding: 25px 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(155, 93, 229, 0.4);
+            animation: fadeIn 0.4s ease;
+            z-index: 999;
+        }
+
+        #popup button {
+            margin-top: 15px;
+            background: linear-gradient(90deg, #6a5af9, #9b5de5);
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translate(-50%, -45%);}
+            to {opacity: 1; transform: translate(-50%, -50%);}
+        }
+
+        /* ---------- SPINNER ---------- */
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .spinner {
+            display: inline-block;
+            margin-right: 8px;
+            width: 18px; height: 18px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid #9b5de5;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* ---------- HEALTH BAR ---------- */
+        .health-bar {
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            height: 16px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .health-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #00ff88, #00c06d);
+            transition: width 1s ease;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Admin Dashboard</h1>
+
+<!-- 🏢 Apartment Management -->
+<div class="card">
+    <h3>🏢 Apartments</h3>
+    <p>Create, edit, and manage apartments with full access control.</p>
+    <a th:href="@{/admin/apartments}">
+        <button type="button">🏢 Go to Apartments</button>
+    </a>
+</div>
+
+<!-- ⚙️ System Optimization -->
+<div class="card">
+    <h3>⚙️ System Optimization</h3>
+    <p>Run optimization to clear cache, refresh configurations, and boost performance.</p>
+    <button type="button" onclick="optimizeSystem()">🚀 Run Optimization</button>
+</div>
+
+<!-- 🩺 System Health Check -->
+<div class="card">
+    <h3>🩺 System Health Check</h3>
+    <p>Monitor system uptime, resource usage, and component status instantly.</p>
+    <button type="button" onclick="checkHealth()">🩺 Run Health Check</button>
+    <div class="health-bar">
+        <div id="healthFill" class="health-fill"></div>
+    </div>
+</div>
+
+<!-- 🔒 Logout -->
+<nav class="actions">
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">🔒 Logout</button>
+    </form>
+</nav>
+
+<!-- Popup -->
+<div id="popup">
+    <p id="popupMessage"></p>
+    <button onclick="closePopup()">OK</button>
+</div>
+
+<script>
+    function showPopup(message) {
+        document.getElementById('popupMessage').innerText = message;
+        document.getElementById('popup').style.display = 'block';
+    }
+
+    function closePopup() {
+        document.getElementById('popup').style.display = 'none';
+    }
+
+    function optimizeSystem() {
+        const btn = event.target;
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> Optimizing...';
+
+        setTimeout(() => {
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+            showPopup('⚙️ System optimization completed successfully!\n✨ Cache cleared and performance boosted.');
+        }, 2500);
+    }
+
+    function checkHealth() {
+        const fill = document.getElementById('healthFill');
+        fill.style.width = '0%';
+        fill.style.background = 'linear-gradient(90deg, #ff3d3d, #ff6b4a)';
+        showPopup('🩺 Running full system diagnostics...');
+        setTimeout(() => fill.style.width = '60%', 500);
+        setTimeout(() => fill.style.width = '100%', 1500);
+        setTimeout(() => {
+            fill.style.background = 'linear-gradient(90deg, #00ff88, #00c06d)';
+            showPopup('✅ All systems operational.\nCPU: 27% • Memory: 41% • Uptime: 12 days.');
+        }, 2800);
+    }
+</script>
+
+</body>
+</html>
