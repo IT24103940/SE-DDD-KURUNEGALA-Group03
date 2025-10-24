@@ -1,54 +1,93 @@
-🏢 **Web-Based Apartment Sales System**
+# 🏢 **Web-Based Apartment Sales System**
 
-This is a group project for the **Software Engineering SE2030** module at **SLIIT**.
-Our system provides a platform for apartment buyers and sellers, enabling property listing, sales management, customer support, and financial tracking through a user-friendly web application.
-
-
-
-📌 **Project Summary**
-
-The Web-Based Apartment Sales System is a full-stack **Spring Boot** web application that allows users to:
-
-* Register/login as customers or staff
-* Browse, search, and manage apartment listings
-* Track sales leads and manage customer inquiries
-* Provide customer support and respond to tickets
-* Manage payments, invoices, and financial records
-* Perform CRUD operations across all modules
-* Access a RESTful backend API for integration
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.3-brightgreen?logo=springboot\&logoColor=white)
+![Java](https://img.shields.io/badge/Java-17-orange?logo=openjdk\&logoColor=white)
+![Maven](https://img.shields.io/badge/Maven-Build%20Tool-red?logo=apachemaven)
+![Thymeleaf](https://img.shields.io/badge/Thymeleaf-MVC-lightgreen?logo=thymeleaf)
+![SQL Server](https://img.shields.io/badge/Database-SQL%20Server-blue?logo=microsoftsqlserver)
+![IDEA](https://img.shields.io/badge/IDE-IntelliJ%20IDEA-purple?logo=intellijidea)
 
 
+### 🧾 **Overview**
 
-🧠 **Features**
-
-✅ Apartment listing with images & availability
-✅ Secure user registration and login
-✅ Sales & lead tracking dashboard
-✅ Customer support ticketing system
-✅ Payment and finance management
-✅ Admin panel for user & system control
-✅ REST API integration with validation
+This is a group project developed for the **Software Engineering (SE2030)** module at **SLIIT**.
+Our system provides an end-to-end digital solution for **apartment sales management**, offering modules for property listings, sales tracking, finance management, and customer support - all integrated into a secure and user-friendly web platform.
 
 
+## 📌 **Project Summary**
 
-🧰 **Tech Stack**
+The **Web-Based Apartment Sales System** is a full-stack **Spring Boot** web application that enables:
 
-| Layer      | Technology           |
-| ---------- | -------------------- |
-| Language   | Java 17              |
-| Backend    | Spring Boot 3.4.5    |
-| Build Tool | Maven                |
-| Database   | MySQL                |
-| API Design | RESTful Web Services |
-| Tools/IDE  | IntelliJ IDEA        |
-
+* 👤 **Customer & Staff Accounts** – secure registration and login
+* 🏘️ **Apartment Listings** – browse, search, and manage properties
+* 💬 **Lead Tracking** – record and monitor potential customer interest
+* 🧾 **Invoice & Payment Management** – handle all financial operations
+* 🧰 **Customer Support Tickets** – resolve inquiries efficiently
+* 🔐 **Role-Based Dashboards** – each user role sees relevant modules
+* 🔄 **Complete CRUD Operations** – for all functional components
 
 
-👥 **Group Members – Group 03**
+## 🧠 **Core Features**
 
-* **P.W. Isuru Heshan Pahalawaththage (IT24101303)** – Sales Manager
-* **Dharmasena B.G.D.N. (IT24103940)** – IT Technician
-* **Leelarathna E.M.J.A. (IT24101120)** – Finance Assistant
-* **Wijesinghe Y.A.H.D. (IT24101174)** – Customer Support Officer
-* **Dombagammana K.D.M.W\.O. (IT24101196)** – Marketing Executive
-* **Malewana G.I.D.M. (IT24101344)** – Admin Officer
+| ✅  | Feature Description                                              |
+| -- | ---------------------------------------------------------------- |
+| 🏠 | Apartment listing with image uploads & availability status       |
+| 🔑 | Secure user registration and authentication                      |
+| 📊 | Sales and lead tracking dashboard                                |
+| 💬 | Customer support ticketing system                                |
+| 💰 | Payment, invoice, and finance record management                  |
+| ⚙️ | Admin panel for user and system control                          |
+| 🧩 | Role-based access: Sales, Finance, IT, Marketing, Support, Admin |
+
+
+## 🧰 **Tech Stack**
+
+| Layer                   | Technology                                      |
+| ----------------------- | ----------------------------------------------- |
+| **Language**            | Java 17                                         |
+| **Backend Framework**   | Spring Boot 3.3.3                               |
+| **Build Tool**          | Maven                                           |
+| **Database**            | SQL Server                                      |
+| **Frontend / UI Layer** | Thymeleaf MVC (Spring Controllers + HTML Views) |
+| **Tools / IDE**         | IntelliJ IDEA                                   |
+
+
+## 🧑‍💻 **System Architecture**
+
+```
+Frontend (Thymeleaf MVC)
+      ↓
+Controller Layer (Spring Boot)
+      ↓
+Service Layer (Business Logic)
+      ↓
+Repository Layer (JPA / Hibernate)
+      ↓
+Database (SQL Server)
+```
+
+
+## 👥 **Group Members – Group 03**
+
+| Name                                  | Role                     | Student ID |
+| ------------------------------------- | ------------------------ | ---------- |
+| **P.W. Isuru Heshan Pahalawaththage** | Sales Manager            | IT24101303 |
+| **Dharmasena B.G.D.N.**               | IT Technician            | IT24103940 |
+| **Leelarathna E.M.J.A.**              | Finance Assistant        | IT24101120 |
+| **Wijesinghe Y.A.H.D.**               | Customer Support Officer | IT24101174 |
+| **Dombagammana K.D.M.W.O.**           | Marketing Executive      | IT24101196 |
+| **Malewana G.I.D.M.**                 | Admin Officer            | IT24101344 |
+
+
+## 🧩 **Future Enhancements**
+
+* ✅ Implement REST API endpoints for external integrations
+* 📱 Add responsive front-end design with advanced UI animations
+* 📊 Introduce analytics dashboard for sales insights
+* 💬 Integrate real-time chat or notification system
+
+
+## 🏁 **Summary**
+
+The **Web-Based Apartment Sales System** demonstrates a robust understanding of **software engineering principles**, including modular design, OOP practices, and multi-role access management.
+It highlights teamwork, full-stack development, and integration of **real-world apartment management workflows** into a professional system.
