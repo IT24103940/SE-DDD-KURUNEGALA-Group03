@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Form – Ultimate Luxury Edition</title>
+    <style>
+        /* -----------------------------------
+           🏛️ ULTIMATE LUXURY USER FORM
+           Glassmorphism • Icons • Glow • Motion
+        ------------------------------------ */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at top right, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* ---------- HEADER ---------- */
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            background: linear-gradient(90deg, #a18cd1, #fbc2eb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        /* ---------- FORM BOX ---------- */
+        form {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(14px);
+            border-radius: 20px;
+            padding: 40px 50px;
+            max-width: 550px;
+            width: 100%;
+            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+            animation: fadeIn 0.7s ease;
+        }
+
+        form div {
+            margin-bottom: 18px;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+            transition: 0.3s;
+        }
+
+        label span {
+            margin-right: 6px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: none;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus, select:focus {
+            background: rgba(255,255,255,0.2);
+            box-shadow: 0 0 10px rgba(155,93,229,0.5);
+            transform: translateY(-2px);
+        }
+
+        /* ---------- ROLES BOX ---------- */
+        #roleSelect {
+            height: 150px;
+            padding: 10px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.12);
+            box-shadow: inset 0 0 12px rgba(155,93,229,0.3);
+            overflow-y: auto;
+            transition: 0.4s ease;
+        }
+
+        #roleSelect:hover {
+            box-shadow: 0 0 20px rgba(155,93,229,0.5), inset 0 0 14px rgba(255,255,255,0.15);
+        }
+
+        #roleSelect optgroup {
+            font-weight: 700;
+            color: #fbc2eb;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 4px;
+        }
+
+        #roleSelect option {
+            padding: 6px 8px;
+            border-radius: 6px;
+            transition: background 0.2s;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        #roleSelect option:hover {
+            background: rgba(155,93,229,0.3);
+        }
+
+        /* ---------- BUTTON ---------- */
+        button[type="submit"] {
+            width: 100%;
+            background: linear-gradient(90deg, #7c5cff, #9b5de5);
+            border: none;
+            color: #fff;
+            font-size: 1rem;
+            padding: 14px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            transition: 0.4s ease;
+            box-shadow: 0 0 20px rgba(124,92,255,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button[type="submit"]::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        button[type="submit"]:hover::after {
+            left: 100%;
+        }
+        button[type="submit"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(155,93,229,0.7);
+        }
+
+        /* ---------- ANIMATIONS ---------- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ---------- SCROLLBAR ---------- */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.15);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        /* --- FIXED DROPDOWN VISIBILITY --- */
+        select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: none;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+            position: relative;
+            z-index: 10; /* makes dropdown appear above blur */
+        }
+
+        /* Style the opened dropdown menu (WebKit-based browsers) */
+        select option {
+            background-color: #1b2530; /* dark solid background for clarity */
+            color: #fff;
+        }
+
+        /* Popup illusion on hover/focus */
+        select:focus {
+            background: rgba(255,255,255,0.2);
+            box-shadow: 0 0 10px rgba(155,93,229,0.6);
+            transform: translateY(-2px);
+            z-index: 99;
+        }
+
+        /* For Firefox and edge cases */
+        select::-ms-expand {
+            background: transparent;
+            border: none;
+        }
+
+        /* Add pop-up smooth fade */
+        select:focus-visible {
+            animation: popup 0.2s ease;
+        }
+
+        @keyframes popup {
+            0% { transform: scale(0.97); opacity: 0.6; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        /* ================================
+   🌌 HERO NAVIGATION – LUXURY BAR (Balanced Fix)
+================================ */
+        .hero-nav {
+            width: 100%;
+            max-width: 1100px;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(18px);
+            border-radius: 16px;
+            padding: 14px 30px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: fadeIn 0.8s ease;
+        }
+
+        /* Center Title — perfectly aligned */
+        .hero-nav h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #a18cd1, #fbc2eb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.8px;
+            text-align: center;
+            flex: 1;
+        }
+
+        /* ---------- HERO BUTTONS (Perfectly Aligned Fix) ---------- */
+        .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 38px;                  /* consistent height */
+            padding: 0 22px;               /* uniform side padding */
+            border-radius: 40px;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1;                /* remove default button line height */
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+            text-decoration: none;
+            vertical-align: middle;
+        }
+
+        /* Back button */
+        .hero-btn.back {
+            background: linear-gradient(90deg, #6a5af9, #9b5de5);
+            color: #fff;
+        }
+        .hero-btn.back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px #9b5de5;
+        }
+
+        /* Logout button – system wide color */
+        .hero-btn.logout {
+            background: linear-gradient(90deg, #ff3d3d, #ff6b4a);
+            color: #fff;
+        }
+        .hero-btn.logout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(255, 61, 61, 0.7);
+        }
+
+        /* Ensure form buttons behave same as <a> buttons */
+        .hero-nav form {
+            margin: 0;
+            padding: 0;
+        }
+        .hero-nav form button.hero-btn {
+            appearance: none;
+            -webkit-appearance: none;
+            background: linear-gradient(90deg, #ff3d3d, #ff6b4a);
+            border: none;
+            height: 38px;                 /* force same height */
+            padding: 0 22px;
+            line-height: 1;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .hero-nav form button.hero-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(255, 61, 61, 0.7);
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- 🌌 HERO NAVIGATION BAR -->
+<header class="hero-nav">
+    <a th:href="@{/it}" class="hero-btn back">🏠 Back to Dashboard</a>
+    <h2 th:text="${userId != null} ? '📝 Edit User' : '✨ Create User'"></h2>
+    <form th:action="@{/logout}" method="post" style="display:inline">
+        <button type="submit" class="hero-btn logout">🔒 Logout</button>
+    </form>
+</header>
+
+
+<h1 th:text="${userId != null} ? '📝 Edit User' : '✨ Create User'"></h1>
+
+<form th:action="${userId == null} ? @{/it/users} : @{/it/users/{id}/edit(id=${userId})}"
+      th:object="${dto}" method="post">
+
+    <input type="hidden" th:field="*{id}"/>
+
+    <!-- Username -->
+    <div>
+        <label><span>👤</span>Username</label>
+        <input type="text" th:field="*{username}" required/>
+    </div>
+
+    <!-- Full Name -->
+    <div>
+        <label><span>🪪</span>Full Name</label>
+        <input type="text" th:field="*{fullName}" required/>
+    </div>
+
+    <!-- Email -->
+    <div>
+        <label><span>📧</span>Email</label>
+        <input type="email" th:field="*{email}" required/>
+    </div>
+
+    <!-- Phone -->
+    <div>
+        <label><span>📞</span>Phone</label>
+        <input type="text" th:field="*{phone}"/>
+    </div>
+
+    <!-- Password -->
+    <div th:if="${userId == null}">
+        <label><span>🔑</span>Password</label>
+        <input type="password" th:field="*{password}" required placeholder="Enter password"/>
+    </div>
+
+    <!-- User Type -->
+    <div>
+        <label><span>🏢</span>User Type</label>
+        <select th:field="*{type}" required>
+            <option th:each="t : ${types}" th:value="${t}" th:text="${t}"></option>
+        </select>
+    </div>
+
+    <!-- Roles -->
+    <div>
+        <label><span>🎭</span>Roles</label>
+        <select id="roleSelect" th:field="*{roles}" multiple>
+            <optgroup label="👨‍💻 Staff Roles">
+                <option th:each="r : ${staffRoles}" th:value="${r}"
+                        th:text="'💼 ' + ${r}"></option>
+            </optgroup>
+            <optgroup label="🤝 Customer Roles">
+                <option th:each="r : ${customerRoles}" th:value="${r}"
+                        th:text="'🎯 ' + ${r}"></option>
+            </optgroup>
+        </select>
+    </div>
+
+    <!-- Submit -->
+    <div>
+        <button type="submit">💾 Save User</button>
+    </div>
+</form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const typeSelect = document.querySelector("[name='type']");
+        const roleSelect = document.getElementById("roleSelect");
+
+        function filterRoles() {
+            const selectedType = typeSelect.value;
+            [...roleSelect.options].forEach(opt => {
+                if (selectedType === "STAFF" && opt.parentNode.label.includes("Staff")) {
+                    opt.style.display = "block";
+                } else if (selectedType === "CUSTOMER" && opt.parentNode.label.includes("Customer")) {
+                    opt.style.display = "block";
+                } else {
+                    opt.style.display = "none";
+                    opt.selected = false;
+                }
+            });
+        }
+
+        typeSelect.addEventListener("change", filterRoles);
+        filterRoles();
+    });
+</script>
+
+</body>
+</html>

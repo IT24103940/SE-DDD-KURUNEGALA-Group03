@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>💎 Promotions – Luxury Edition</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        * {margin:0;padding:0;box-sizing:border-box;font-family:"Poppins",sans-serif;}
+
+        body {
+            background: radial-gradient(circle at top right,#0f2027,#203a43,#2c5364);
+            color:#fff;overflow-x:hidden;scroll-behavior:smooth;
+        }
+
+        /* HERO NAV */
+        .hero-nav {
+            display:flex;justify-content:space-between;align-items:center;
+            background:rgba(255,255,255,0.05);
+            padding:20px 40px;margin:40px auto;width:85%;
+            border-radius:16px;backdrop-filter:blur(14px);
+            box-shadow:0 10px 30px rgba(0,0,0,0.4);
+        }
+        .hero-nav h1 {
+            font-size:1.8rem;
+            background:linear-gradient(90deg,#ffb347,#ffcc33);
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+            text-shadow:0 0 20px rgba(255,204,51,0.4);
+            display:flex;align-items:center;gap:10px;
+        }
+        .hero-buttons button {
+            border:none;padding:12px 24px;border-radius:40px;font-weight:600;
+            color:#fff;cursor:pointer;transition:.3s ease;
+        }
+        .btn-dashboard {background:linear-gradient(135deg,#7c5cff,#a58bff);}
+        .btn-dashboard:hover {transform:translateY(-3px);box-shadow:0 0 25px rgba(160,128,255,0.6);}
+        .btn-logout {background:linear-gradient(135deg,#ff3d3d,#ff6b4a);}
+        .btn-logout:hover {transform:scale(1.05);box-shadow:0 0 25px rgba(255,61,61,0.8);}
+
+        /* CONTAINER */
+        .container {
+            width:80%;max-width:950px;margin:0 auto 100px;
+            background:rgba(255,255,255,0.05);border-radius:20px;
+            padding:50px 60px;box-shadow:0 10px 30px rgba(0,0,0,0.4);
+            backdrop-filter:blur(14px);
+        }
+        h2 {
+            text-align:center;font-size:1.8rem;color:#ffcc00;
+            text-shadow:0 0 15px rgba(255,204,0,0.4);margin-bottom:30px;
+        }
+
+        /* FORM */
+        form.promo-form {
+            display:flex;flex-direction:column;align-items:center;
+            gap:14px;margin:0 auto 50px;width:100%;max-width:750px;
+        }
+        form.promo-form input, form.promo-form select, form.promo-form textarea {
+            width:100%;padding:12px;border:none;border-radius:12px;
+            background:rgba(255,255,255,0.08);color:#fff;font-size:1rem;outline:none;
+            transition:background .3s;
+        }
+        form.promo-form input:focus,form.promo-form select:focus,form.promo-form textarea:focus{
+            background:rgba(255,255,255,0.15);
+        }
+        form.promo-form select option{background:#1b1f25;color:#fff;}
+        .btn-create {
+            background:linear-gradient(135deg,#7c5cff,#a58bff);
+            color:#fff;border:none;padding:12px 40px;border-radius:40px;
+            font-weight:600;cursor:pointer;transition:.3s ease;
+            box-shadow:0 0 15px rgba(124,92,255,0.3);
+        }
+        .btn-create:hover{transform:scale(1.05);box-shadow:0 0 25px rgba(160,128,255,0.6);}
+
+        /* TABLE */
+        table {width:100%;border-collapse:collapse;background:rgba(255,255,255,0.05);
+            border-radius:15px;overflow:hidden;}
+        th,td {padding:14px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.1);}
+        th {color:#ffcc00;background:rgba(255,255,255,0.08);}
+        tr:hover{background:rgba(255,255,255,0.07);}
+        td button{margin:4px;}
+
+        /* BUTTON STYLES – refined alignment */
+        .actions-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .btn-edit, .btn-delete, .btn-upload {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 20px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: none;
+            border-radius: 40px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            min-width: 120px;
+        }
+
+        /* Unified glowing edge */
+        .btn-edit:hover, .btn-delete:hover, .btn-upload:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 16px rgba(255,255,255,0.3);
+        }
+
+        /* Colors balanced with depth */
+        .btn-edit {
+            background: linear-gradient(135deg,#2ecc71,#27ae60);
+            box-shadow: 0 4px 12px rgba(46,204,113,0.3);
+        }
+        .btn-delete {
+            background: linear-gradient(135deg,#ff4d4d,#e60000);
+            box-shadow: 0 4px 12px rgba(255,77,77,0.3);
+        }
+        .btn-upload {
+            background: linear-gradient(135deg,#ffd700,#ffb347);
+            color: #222;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(255,215,0,0.3);
+        }
+        .btn-back {
+            background: linear-gradient(135deg, #7c5cff, #a58bff);
+            color: #fff;
+            padding: 14px 38px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 8px 20px rgba(124, 92, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(160, 128, 255, 0.7);
+        }
+
+        .btn-back:active {
+            transform: translateY(1px);
+            box-shadow: 0 0 10px rgba(160, 128, 255, 0.5);
+        }
+
+        /* center the button container properly */
+        .back-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+
+
+        /* Upload box – smaller and uniform */
+        .upload-box {
+            text-align: center;
+            background: rgba(255,255,255,0.06);
+            border-radius: 14px;
+            padding: 10px 0 16px;
+            margin-top: 8px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+            backdrop-filter: blur(8px);
+        }
+
+        .upload-box input[type="file"] {
+            width: 80%;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 6px;
+            color: #ccc;
+            font-size: 0.9rem;
+            border: none;
+            margin-bottom: 8px;
+        }
+        .upload-box input[type="file"]::-webkit-file-upload-button {
+            background: linear-gradient(135deg,#7c5cff,#a58bff);
+            border: none;
+            color: #fff;
+            border-radius: 20px;
+            padding: 6px 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .upload-box input[type="file"]::-webkit-file-upload-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(160,128,255,0.6);
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="hero-nav">
+    <h1>📢 Promotions Management</h1>
+    <div class="hero-buttons">
+        <a th:href="@{/marketing}">
+            <button class="btn-dashboard">⬅ Dashboard</button>
+        </a>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn-logout">🔒 Logout</button>
+        </form>
+    </div>
+</div>
+
+<div class="container">
+    <h2>Promotions</h2>
+
+    <div th:if="${errorMessage}" style="background:#ffe6e6;color:#a00;
+         padding:10px;border-radius:10px;margin-bottom:20px;">
+        ⚠️ <span th:text="${errorMessage}"></span>
+    </div>
+
+    <!-- FORM -->
+    <form class="promo-form" th:action="@{/marketing/promotions}" method="post">
+        <input name="title" placeholder="🎯 Title" required>
+        <input name="bannerImageUrl" placeholder="🖼️ Banner URL">
+
+        <select name="status">
+            <option th:each="s:${statuses}" th:value="${s}" th:text="${s}"></option>
+        </select>
+
+        <select name="apartment.id">
+            <option value="">🏢 -- optional apartment --</option>
+            <option th:each="a:${apartments}" th:value="${a.id}" th:text="${a.code}"></option>
+        </select>
+
+        <select name="discountType">
+            <option value="">-- none --</option>
+            <option value="PERCENT">PERCENT</option>
+            <option value="FIXED">FIXED</option>
+        </select>
+
+        <input type="number" step="0.01" name="discountValue" placeholder="💵 Discount Value">
+        <input type="date" name="startDate">
+        <input type="date" name="endDate">
+        <textarea name="description" rows="3" placeholder="📝 Description (optional)"></textarea>
+
+        <button type="submit" class="btn-create">✨ Create Promotion</button>
+    </form>
+
+    <!-- TABLE -->
+    <table>
+        <tr>
+            <th>Title</th><th>Status</th><th>Type</th><th>Value</th>
+            <th>Start</th><th>End</th><th>Actions</th>
+        </tr>
+
+        <tr th:each="p:${promotions}">
+            <td th:text="${p.title}"></td>
+            <td th:text="${p.status}"></td>
+            <td th:text="${p.discountType}"></td>
+            <td th:text="${p.discountValue}"></td>
+            <td th:text="${p.startDate}"></td>
+            <td th:text="${p.endDate}"></td>
+            <td>
+                <div class="actions-group">
+                    <a th:href="@{'/marketing/promotions/' + ${p.id} + '/edit'}">
+                        <button class="btn-edit">✏️ Edit</button>
+                    </a>
+                    <form th:action="@{'/marketing/promotions/' + ${p.id} + '/delete'}" method="post" style="display:inline;">
+                        <button type="submit" class="btn-delete">🗑️ Delete</button>
+                    </form>
+                </div>
+
+                <div class="upload-box">
+                    <form th:action="@{'/marketing/promotion/' + ${p.id} + '/upload'}" method="post" enctype="multipart/form-data">
+                        <input type="file" name="image" required>
+                        <button type="submit" class="btn-upload">📤 Upload Banner</button>
+                    </form>
+                </div>
+            </td>
+
+        </tr>
+    </table>
+
+    <div class="back-container">
+        <a th:href="@{/marketing}">
+            <button class="btn-back">⬅ Back</button>
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>

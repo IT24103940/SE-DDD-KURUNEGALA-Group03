@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>💼 Sales Manager Dashboard – Luxury Edition</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
+
+        body {
+            background: radial-gradient(circle at top right, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 0;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ffb347, #ffcc33);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 204, 51, 0.4);
+            margin-bottom: 30px;
+        }
+
+        .card {
+            width: 60%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 24px 32px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #ffd700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            color: #ccc;
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+        }
+
+        .card button {
+            background: linear-gradient(135deg, #7c5cff, #a58bff);
+            border: none;
+            color: white;
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(124, 92, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .card button:hover {
+            transform: scale(1.07);
+            box-shadow: 0 0 25px rgba(160, 128, 255, 0.8);
+        }
+
+        nav.actions {
+            margin-top: 35px;
+        }
+
+        nav.actions form {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* 🔴 Luxury Logout Button */
+        nav.actions button {
+            background: linear-gradient(135deg, #ff3d3d, #ff6b4a);
+            color: #fff;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 14px 40px;
+            border-radius: 50px;
+            box-shadow: 0 0 20px rgba(255, 61, 61, 0.4);
+            transition: all 0.35s ease;
+        }
+
+        nav.actions button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(255, 61, 61, 0.8);
+        }
+
+        nav.actions button::before {
+            content: "🔒 ";
+        }
+    </style>
+</head>
+<body>
+
+<h1>💼 Sales Manager Dashboard</h1>
+
+<div class="card">
+    <h3>📇 Leads</h3>
+    <p>Track and manage sales leads effectively.</p>
+    <a th:href="@{/sales/leads}">
+        <button type="button">Go to Leads</button>
+    </a>
+</div>
+
+<div class="card">
+    <h3>🧾 Orders</h3>
+    <p>Create and manage customer sales orders.</p>
+    <a th:href="@{/sales/orders}">
+        <button type="button">Go to Orders</button>
+    </a>
+</div>
+
+<div class="card">
+    <h3>📊 Sales Report</h3>
+    <p>Analyze performance and monitor overall sales trends.</p>
+    <a th:href="@{/sales/report}">
+        <button type="button">View Report</button>
+    </a>
+</div>
+
+<nav class="actions">
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Logout</button>
+    </form>
+</nav>
+
+</body>
+</html>

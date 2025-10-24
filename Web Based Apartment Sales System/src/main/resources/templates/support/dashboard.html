@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Support Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        /* ---------- BACKGROUND ---------- */
+        body {
+            background: radial-gradient(circle at top right, #0b141b, #203a43, #0e1a21);
+            color: #fff;
+            font-family: "Poppins", sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            animation: gradientShift 12s ease infinite alternate;
+        }
+
+        /* ---------- HERO NAV ---------- */
+        .hero-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 90%;
+            max-width: 1100px;
+            margin: 40px auto 50px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            padding: 20px 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(15px);
+        }
+
+        .hero-title {
+            flex: 1;
+            text-align: center;
+            color: #ffcc00;
+            font-size: 1.9rem;
+            font-weight: 700;
+            text-shadow: 0 0 18px rgba(255, 204, 0, 0.7);
+        }
+
+        .btn-nav {
+            border: none;
+            border-radius: 40px;
+            padding: 10px 25px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #fff;
+            transition: 0.3s;
+        }
+
+        .btn-nav.purple {
+            background: linear-gradient(135deg, #7c5cff, #a58bff);
+            box-shadow: 0 0 15px rgba(124, 92, 255, 0.5);
+        }
+
+        .btn-nav.purple:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(160, 128, 255, 0.9);
+        }
+
+        .btn-nav.red {
+            background: linear-gradient(135deg, #ff4d4d, #e60000);
+            box-shadow: 0 0 18px rgba(255, 77, 77, 0.5);
+        }
+
+        .btn-nav.red:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 28px rgba(255, 77, 77, 0.9);
+        }
+
+        /* ---------- CARD CONTAINER ---------- */
+        .dashboard-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            width: 320px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            transition: 0.35s;
+            backdrop-filter: blur(15px);
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 35px rgba(124, 92, 255, 0.3);
+        }
+
+        .card h3 {
+            color: #ffcc00;
+            font-weight: 700;
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: #cfd8dc;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .card button {
+            background: linear-gradient(135deg, #7c5cff, #a58bff);
+            border: none;
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin: 0 auto;
+        }
+
+        .card button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(124, 92, 255, 0.8);
+        }
+
+        /* ---------- LOGOUT ---------- */
+        nav.actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        nav.actions button {
+            background: linear-gradient(135deg, #ff4d4d, #e60000);
+            border: none;
+            color: #fff;
+            padding: 12px 35px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1rem;
+            box-shadow: 0 8px 25px rgba(255, 77, 77, 0.4);
+        }
+
+        nav.actions button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(255, 77, 77, 0.8);
+        }
+    </style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero-bar">
+    <h1 class="hero-title">💬 Customer Support Dashboard</h1>
+</header>
+
+<!-- DASHBOARD -->
+<div class="dashboard-container">
+    <div class="card">
+        <h3>🎫 Tickets</h3>
+        <p>View and resolve customer tickets efficiently with elegance.</p>
+        <a th:href="@{/support/tickets}">
+            <button type="button">📂 Go to Tickets</button>
+        </a>
+    </div>
+
+    <div class="card">
+        <h3>⭐ Feedback</h3>
+        <p>Review and manage customer feedback with detailed insights.</p>
+        <a th:href="@{/support/feedback}">
+            <button type="button">💬 Manage Feedback</button>
+        </a>
+    </div>
+</div>
+
+<nav class="actions">
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">🔒 Logout</button>
+    </form>
+</nav>
+
+</body>
+</html>

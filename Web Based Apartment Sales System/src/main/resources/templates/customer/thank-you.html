@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Thank You</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+  <div class="wrap">
+    <h1>Thank you for your interest</h1>
+    <p>
+      We've received your request and created a sales lead. Our team will review the details and contact you shortly to guide you through the next steps
+      including availability confirmation, payment arrangements, and documentation. We appreciate your trust in us.
+    </p>
+    <div class="lead-meta">
+      <p>
+        <strong>Lead ID:</strong>
+        <span th:text="${lead.id}"></span>
+      </p>
+      <p>
+        <strong>Apartment:</strong>
+        <span th:text="${lead.apartment.title}"></span>
+      </p>
+      <p th:if="${lead.promotion != null}">
+        <strong>Promotion:</strong>
+        <span th:text="${lead.promotion.title}"></span>
+      </p>
+      <p th:if="${lead.paymentPlan != null}">
+        <strong>Payment Plan:</strong>
+        <span th:text="${lead.paymentPlan}"></span>
+      </p>
+      <p>
+        <strong>Status:</strong>
+        <span th:text="${lead.status}"></span>
+      </p>
+    </div>
+    <p>
+      While you wait, feel free to continue exploring our available apartments and promotions. If you have any questions, our support team is just a click away.
+    </p>
+    <div class="cta">
+      <a class="btn" th:href="@{/home}">Back to Home</a>
+      <a class="btn-secondary" th:href="@{/customer/orders}">View My Orders</a>
+      <a class="btn-secondary" th:href="@{/customer/tickets}">Contact Support</a>
+    </div>
+  </div>
+</body>
+</html>

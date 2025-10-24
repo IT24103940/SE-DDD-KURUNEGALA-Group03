@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <title>Dashboard</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+  <h2>Dashboard</h2>
+  <p th:text="'Hello, ' + ${#authentication.name}"></p>
+
+  <ul>
+    <li sec:authorize="hasRole('ADMIN_OFFICER')"><a th:href="@{/admin/apartments}">Admin: Apartments</a></li>
+    <li sec:authorize="hasRole('IT_TECHNICIAN')"><a th:href="@{/it/users}">IT: Users</a></li>
+    <li sec:authorize="hasRole('SALES_MANAGER')"><a th:href="@{/sales/leads}">Sales: Leads</a></li>
+    <li sec:authorize="hasRole('SALES_MANAGER')"><a th:href="@{/sales/orders}">Sales: Orders</a></li>
+    <li sec:authorize="hasRole('FINANCE_ASSISTANT')"><a th:href="@{/finance/payments}">Finance: Payments</a></li>
+    <li sec:authorize="hasRole('FINANCE_ASSISTANT')"><a th:href="@{/finance/invoices}">Finance: Invoices</a></li>
+    <li sec:authorize="hasRole('FINANCE_ASSISTANT')"><a th:href="@{/finance/expenses}">Finance: Expenses</a></li>
+    <li sec:authorize="hasRole('MARKETING_EXECUTIVE')"><a th:href="@{/marketing/promotions}">Marketing: Promotions</a></li>
+    <li sec:authorize="hasRole('CUSTOMER_SUPPORT')"><a th:href="@{/support/tickets}">Support: Tickets</a></li>
+    <li sec:authorize="hasRole('CUSTOMER_SUPPORT')"><a th:href="@{/support/feedback}">Support: Feedback</a></li>
+  </ul>
+  <p><a th:href="@{/logout}">
+    <button type="submit">Logout</button>
+  </a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Public Promotions</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <!-- Per-page internal CSS: promotions accent -->
+  <style>
+    :root{--promo-accent:#00d4ff;--promo-accent-2:#0077ff}
+    body{background:linear-gradient(180deg,rgba(0,0,0,0.02),transparent)}
+    .container{padding:28px 18px}
+    .promo-card {background:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.04)); border-left:6px solid var(--promo-accent); padding:14px; border-radius:12px; margin-bottom:14px; box-shadow:0 8px 30px rgba(3,10,30,0.25)}
+    .promo-card h3{color:var(--promo-accent-2); margin:0 0 6px}
+    .promo-cta{display:inline-block;padding:8px 14px;border-radius:999px;background:linear-gradient(90deg,var(--promo-accent),var(--promo-accent-2));color:#001; font-weight:800}
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Current Promotions</h2>
+  <div th:each="p : ${promotions}" class="promo-card">
+    <h3 th:text="${p.title}"></h3>
+    <p th:text="${p.description}"></p>
+    <!-- Inline dynamic style example: use promo color if provided -->
+    <a th:href="@{'/promotion/' + ${p.id}}"
+       th:class="'promo-cta'"
+       th:style="${p.colorStart} != null ? 'background: linear-gradient(90deg,' + ${p.colorStart} + ',' + (${p.colorEnd} ?: ${p.colorStart}) + '); color: #000;' : ''">
+       <span th:text="${p.ctaText} ?: 'View Promotion'"></span>
+    </a>
+  </div>
+</div>
+</body>
+</html>

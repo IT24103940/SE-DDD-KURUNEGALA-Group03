@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Promotion</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        /* ============================
+   Edit Promotion – Luxury Edition
+   ============================ */
+        body {
+            background: radial-gradient(circle at top right, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            font-family: "Poppins", sans-serif;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 70%;
+            margin: 80px auto;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px 60px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 1.9rem;
+            color: #ffcc00;
+            text-shadow: 0 0 18px rgba(255, 204, 0, 0.4);
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            align-items: center;
+        }
+
+        /* Input, Select, Textarea */
+        input, select, textarea {
+            width: 80%;
+            padding: 12px 16px;
+            font-size: 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #a58bff;
+            box-shadow: 0 0 10px rgba(124, 92, 255, 0.5);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        /* Dropdown visibility (most important fix) */
+        select option {
+            background-color: #1c1f26;
+            color: #fff;
+            padding: 8px;
+        }
+        select:focus option {
+            background-color: #292f3f;
+        }
+        select::-ms-expand {
+            background: transparent;
+            border: none;
+        }
+
+        /* Labels */
+        label {
+            width: 80%;
+            color: #ffcc00;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.3);
+        }
+
+        /* Buttons */
+        button {
+            border: none;
+            border-radius: 40px;
+            padding: 14px 38px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button[type="submit"] {
+            background: linear-gradient(135deg, #7c5cff, #a58bff);
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(124, 92, 255, 0.4);
+        }
+        button[type="submit"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(160, 128, 255, 0.7);
+        }
+
+        /* Back Button */
+        a button {
+            background: linear-gradient(135deg, #ff4d4d, #e60000);
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(255, 77, 77, 0.4);
+            margin-top: 25px;
+        }
+        a button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(255, 77, 77, 0.7);
+        }
+
+        /* Textarea height */
+        textarea {
+            min-height: 100px;
+            resize: none;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Edit Promotion</h2>
+
+    <form th:action="@{'/marketing/promotions/' + ${promotion.id} + '/update'}"
+          th:object="${promotion}" method="post">
+
+        <input type="text" th:field="*{title}" placeholder="Title" required/>
+        <input type="text" th:field="*{bannerImageUrl}" placeholder="Banner URL"/>
+
+        <select th:field="*{status}">
+            <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}"></option>
+        </select>
+
+        <select th:field="*{apartment.id}">
+            <option value="">-- (optional) apartment --</option>
+            <option th:each="a : ${apartments}" th:value="${a.id}" th:text="${a.code}"></option>
+        </select>
+
+        <!-- Discount settings -->
+        <label>Discount Type:</label>
+        <select th:field="*{discountType}">
+            <option value="">-- none --</option>
+            <option value="PERCENT">PERCENT</option>
+            <option value="FIXED">FIXED</option>
+        </select>
+
+        <label>Discount Value:</label>
+        <input type="number" step="0.01" min="0" th:field="*{discountValue}" placeholder="10 for 10% or 500 for fixed"/>
+
+        <!-- Optional: date range to prevent clearing on update -->
+        <label>Start Date:</label>
+        <input type="date" th:field="*{startDate}"/>
+
+        <label>End Date:</label>
+        <input type="date" th:field="*{endDate}"/>
+
+        <textarea th:field="*{description}" placeholder="Description"></textarea>
+
+        <button type="submit">Update</button>
+    </form>
+
+    <a th:href="@{/marketing/promotions}">
+        <button type="submit">Back</button>
+    </a>
+</div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${feedback.id} == null ? 'Submit Feedback' : 'Edit Feedback'"></title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h2 th:text="${feedback.id} == null ? 'Submit Feedback' : 'Edit Feedback'"></h2>
+
+    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+    <form th:object="${feedback}"
+          th:action="${feedback.id} == null ? @{/customer/feedback} : @{/customer/feedback/edit/{id}(id=${feedback.id})}"
+          method="post">
+        <div>
+            <label for="message">Message</label><br>
+            <textarea id="message" th:field="*{message}" required placeholder="Write your feedback..." rows="5" cols="60"></textarea>
+        </div>
+        <div>
+            <label for="rating">Rating (1-5)</label><br>
+            <input id="rating" type="number" th:field="*{rating}" min="1" max="5" required />
+        </div>
+        <div style="margin-top:1em;">
+            <button type="submit" class="btn">Save</button>
+            <a th:href="@{/customer/my-feedback}" class="btn">Cancel</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

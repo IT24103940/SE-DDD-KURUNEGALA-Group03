@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Order Details</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+  <h2>Order #<span th:text="${order.id}"></span></h2>
+
+  <section>
+    <h3>Summary</h3>
+    <p>
+      Apartment: <span th:text="${order.apartment != null ? order.apartment.title : '—'}"></span><br/>
+      Status: <strong th:text="${order.status}"></strong><br/>
+      Total: <span th:text="${order.totalAmount}"></span>
+      <span th:if="${order.discountAmount != null}">, Discount: <span th:text="${order.discountAmount}"></span></span>
+      <span th:if="${order.netAmount != null}">, Net: <span th:text="${order.netAmount}"></span></span><br/>
+      Payment Plan: <span th:text="${order.paymentPlan}"></span><br/>
+      Promotion: <span th:text="${order.promotion != null ? order.promotion.title : '—'}"></span><br/>
+      Signed At: <span th:text="${order.signedAt}"></span>
+      <span th:if="${order.closedAt != null}">, Closed At: <span th:text="${order.closedAt}"></span></span>
+    </p>
+  </section>
+
+  <section>
+    <h3>Order Documents</h3>
+    <ul>
+      <li th:each="d : ${orderDocs}">
+        <a th:href="${d.fileUrl}" th:text="${d.docType + ' - ' + d.fileName}" target="_blank"></a>
+      </li>
+      <li th:if="${#lists.isEmpty(orderDocs)}">No documents uploaded.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h3>Invoices</h3>
+    <table>
+      <tr>
+        <th>#</th><th>Type</th><th>Issue</th><th>Due</th><th>Amount</th><th>Status</th><th>Documents</th><th>Payments</th>
+      </tr>
+      <tr th:each="i : ${invoices}">
+        <td th:text="${i.invoiceNumber}"></td>
+        <td th:text="${i.type}"></td>
+        <td th:text="${i.issueDate}"></td>
+        <td th:text="${i.dueDate}"></td>
+        <td th:text="${i.amount}"></td>
+        <td th:text="${i.status}"></td>
+        <td>
+          <ul>
+            <li th:each="d : ${invoiceDocs[i.id]}">
+              <a th:href="${d.fileUrl}" th:text="${d.docType + ' - ' + d.fileName}" target="_blank"></a>
+            </li>
+            <li th:if="${invoiceDocs[i.id] == null || #lists.isEmpty(invoiceDocs[i.id])}">No documents</li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li th:each="p : ${invoicePayments[i.id]}">
+              <span th:text="${p.paidDate}"></span> - <strong th:text="${p.paidAmount}"></strong> (<span th:text="${p.method}"></span>)
+              <span th:if="${p.reference}"> - <em th:text="${p.reference}"></em></span>
+            </li>
+            <li th:if="${invoicePayments[i.id] == null || #lists.isEmpty(invoicePayments[i.id])}">No payments</li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+  </section>
+
+  <p><a th:href="@{/customer/orders}">Back to My Orders</a></p>
+</div>
+</body>
+</html>
+

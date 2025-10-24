@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Customer Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f6f9; margin: 0; padding: 0; }
+    header { background: #2c3e50; color: white; padding: 15px; text-align: center; }
+    nav a { margin: 0 15px; color: #ecf0f1; text-decoration: none; }
+    nav a:hover { text-decoration: underline; }
+    main { padding: 20px; }
+    .card {
+        background: white; padding: 20px; max-width: 600px; margin: auto;
+        border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    h2 { margin-top: 0; }
+    .actions { margin-top: 16px; }
+    .btn { display: inline-block; padding: 10px 14px; background: #2c3e50; color: #fff; border-radius: 4px; text-decoration: none; margin-right: 8px; }
+    .btn:hover { opacity: 0.9; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Customer Dashboard</h1>
+  <nav>
+    <a th:href="@{/customer/dashboard}">Home</a>
+    <a th:href="@{/customer/my-feedback}">Manage Feedbacks</a>
+    <a th:href="@{/customer/profile}">Profile</a>
+    <a th:href="@{/customer/orders}">Orders</a>
+    <a th:href="@{/logout}">Logout</a>
+  </nav>
+</header>
+
+<main>
+  <div class="card">
+    <h2>Welcome, <span th:text="${fullName}"></span> 👋</h2>
+    <p><strong>Username:</strong> <span th:text="${username}"></span></p>
+    <p><strong>Email:</strong> <span th:text="${email}"></span></p>
+    <p><strong>Phone:</strong> <span th:text="${phone} ?: 'Not provided'"></span></p>
+    <p><strong>Last Login:</strong> <span th:text="${lastLoginAt} ?: 'First login'"></span></p>
+
+    <div class="actions">
+      <a class="btn" th:href="@{/customer/my-feedback}">Manage Feedbacks</a>
+      <a class="btn" th:href="@{/customer/feedback}">Submit Feedback</a>
+    </div>
+  </div>
+</main>
+</body>
+</html>

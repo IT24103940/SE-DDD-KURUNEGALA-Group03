@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>IT Technician Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://kit.fontawesome.com/a2e0e6ad83.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(145deg, #0b141b, #203a43, #0e1a21);
+            color: #f1f1f1;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            text-align: center;
+            padding: 40px 0 10px;
+            color: #ffcc00;
+            font-size: 2rem;
+            font-weight: 700;
+            text-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
+            letter-spacing: 1px;
+        }
+
+        header::after {
+            content: "";
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(90deg, #00c8ff, #ffcc00);
+            display: block;
+            margin: 10px auto;
+            border-radius: 5px;
+        }
+
+        .dashboard-container {
+            width: 90%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+            padding-bottom: 80px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 18px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(255, 204, 0, 0.3);
+            border: 1px solid rgba(255, 204, 0, 0.4);
+        }
+
+        .card i {
+            font-size: 35px;
+            color: #ffcc00;
+            margin-bottom: 8px;
+        }
+
+        .card h3 {
+            color: #ffcc00;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #ccc;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .card button {
+            background: linear-gradient(135deg, #7c5cff, #a58bff);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(124, 92, 255, 0.3);
+            margin-top: 20px;
+        }
+
+        .card button:hover {
+            background: linear-gradient(135deg, #a58bff, #c8b4ff);
+            box-shadow: 0 0 25px rgba(170, 130, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        /* ---------- Modal ---------- */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: rgba(25, 25, 25, 0.9);
+            border-radius: 20px;
+            padding: 30px 40px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            color: white;
+            box-shadow: 0 0 40px rgba(255, 204, 0, 0.25);
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 22px;
+            color: #ffcc00;
+            cursor: pointer;
+        }
+
+        .loading {
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            border-top: 3px solid #ffcc00;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            margin: 0 auto 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        nav.actions {
+            width: 90%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 20px;
+        }
+
+        nav.actions button {
+            background: linear-gradient(90deg, #ff3d3d, #ff6b4a);
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 12px rgba(160, 88, 255, 0.3);
+        }
+
+        nav.actions button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(255, 61, 61, 0.7);
+        }
+    </style>
+</head>
+<body>
+<header>💻 <i class="fas fa-user-cog"></i> IT Technician Dashboard</header>
+
+<div class="dashboard-container">
+    <div class="card" onclick="openModal('users')">
+        <i class="fas fa-users-cog"></i> 👥
+        <h3>User Management</h3>
+        <p>Manage user accounts, roles, and credentials efficiently.</p>
+        <button><i class="fas fa-user-shield"></i> ⚙ Manage Users</button>
+    </div>
+
+    <div class="card" onclick="openModal('system')">
+        <i class="fas fa-microchip"></i> ⚡
+        <h3>System Health</h3>
+        <p>Monitor uptime, CPU, and memory performance.</p>
+        <button><i class="fas fa-chart-line"></i> 📊 View System Health</button>
+    </div>
+
+    <div class="card" onclick="openModal('backup')">
+        <i class="fas fa-database"></i> 💾
+        <h3>Data Backup</h3>
+        <p>Backup your system data safely and securely.</p>
+        <button><i class="fas fa-save"></i> ☁ Take Backup</button>
+    </div>
+</div>
+
+<nav class="actions">
+    <form th:action="@{/logout}" method="post">
+        <button type="submit"><i class="fas fa-lock"></i> 🔒 Logout</button>
+    </form>
+</nav>
+
+<!-- User Management Modal -->
+<div id="modal-users" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('users')">&times;</span>
+        <h2>👥 <i class="fas fa-users"></i> User Management</h2>
+        <p>Access user profiles, reset credentials, and adjust access levels.</p>
+        <a th:href="@{/it/users}">
+            <button><i class="fas fa-user-edit"></i> ✏ Go to User Panel</button>
+        </a>
+    </div>
+</div>
+
+<!-- System Health Modal -->
+<div id="modal-system" class="modal">
+    <div class="modal-content" id="systemModal">
+        <span class="close-btn" onclick="closeModal('system')">&times;</span>
+        <h2>⚙️ <i class="fas fa-heartbeat"></i> System Health</h2>
+        <div id="systemContent">
+            <p>🕒 Uptime: <b>34 days</b><br>💻 CPU: <b>45%</b> | 🧠 Memory: <b>62%</b></p>
+            <button onclick="showGraph()">📈 <i class="fas fa-chart-area"></i> View More Analytics</button>
+        </div>
+    </div>
+</div>
+
+<!-- Backup Modal -->
+<div id="modal-backup" class="modal">
+    <div class="modal-content" id="backupModal">
+        <span class="close-btn" onclick="closeModal('backup')">&times;</span>
+        <h2>💾 <i class="fas fa-database"></i> Data Backup</h2>
+        <div id="backupStatus"></div>
+        <button onclick="startBackup()">☁ <i class="fas fa-cloud-upload-alt"></i> Take Backup</button>
+    </div>
+</div>
+
+<script>
+    let liveChart = null;
+    let updateInterval = null;
+
+    function openModal(type) {
+        document.getElementById(`modal-${type}`).style.display = "flex";
+        document.body.style.overflow = "hidden";
+        if (type === "backup") showBackupInfo();
+    }
+
+    function closeModal(type) {
+        document.getElementById(`modal-${type}`).style.display = "none";
+        document.body.style.overflow = "auto";
+        if (type === "system") {
+            clearInterval(updateInterval);
+            liveChart = null;
+            document.getElementById("systemContent").innerHTML = `
+          <p>🕒 Uptime: <b>34 days</b><br>💻 CPU: <b>45%</b> | 🧠 Memory: <b>62%</b></p>
+          <button onclick="showGraph()">📈 <i class='fas fa-chart-area'></i> View More Analytics</button>`;
+        }
+    }
+
+    function showGraph() {
+        const container = document.getElementById("systemContent");
+        container.innerHTML = `<canvas id='systemChart' width='400' height='250'></canvas>`;
+        const ctx = document.getElementById("systemChart").getContext("2d");
+
+        liveChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                datasets: [
+                    { label: "CPU (%)", data: [40, 55, 50, 70, 65, 75, 60], borderColor: "#ffcc00", backgroundColor: "rgba(255,204,0,0.2)", fill: true, tension: 0.4 },
+                    { label: "Memory (%)", data: [65, 68, 62, 78, 80, 84, 70], borderColor: "#7c5cff", backgroundColor: "rgba(124,92,255,0.2)", fill: true, tension: 0.4 }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: { y: { beginAtZero: true, grid: { color: "#222" } }, x: { grid: { color: "#222" } } },
+                plugins: { legend: { labels: { color: "#fff" } } }
+            }
+        });
+
+        // Auto-update chart
+        updateInterval = setInterval(() => {
+            const cpu = Math.floor(Math.random() * 60) + 40;
+            const mem = Math.floor(Math.random() * 60) + 40;
+            const label = new Date().toLocaleTimeString([], { minute: '2-digit', second: '2-digit' });
+            liveChart.data.labels.push(label);
+            liveChart.data.datasets[0].data.push(cpu);
+            liveChart.data.datasets[1].data.push(mem);
+            if (liveChart.data.labels.length > 10) {
+                liveChart.data.labels.shift();
+                liveChart.data.datasets[0].data.shift();
+                liveChart.data.datasets[1].data.shift();
+            }
+            liveChart.update();
+        }, 3000);
+    }
+
+    function showBackupInfo() {
+        const now = new Date();
+        const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        document.getElementById("backupStatus").innerHTML = `<p>🕒 Last backup at: <b>${time}</b></p>`;
+    }
+
+    function startBackup() {
+        const container = document.getElementById("backupStatus");
+        container.innerHTML = `<div class='loading'></div><p>💾 Backing up your data...</p>`;
+        setTimeout(() => {
+            container.innerHTML = `<p style='color:#00ff88;font-weight:600;'>✅ Backup Successful!</p>`;
+        }, 3000);
+    }
+</script>
+</body>
+</html>
